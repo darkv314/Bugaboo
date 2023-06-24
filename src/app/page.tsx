@@ -9,8 +9,8 @@ export default function Home() {
         <CustomButton>Login</CustomButton>
         <CustomButton theme="secondary">More news</CustomButton>
         <CustomButton theme="imageButton">
-          <ImageButton>
-            <UserCircle />
+          <ImageButton icon={<UserCircle />}>
+            Join now!
           </ImageButton>
         </CustomButton>
       </div>
