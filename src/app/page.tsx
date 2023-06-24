@@ -1,6 +1,5 @@
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
-import Image from "next/image";
 
 export default function Home() {
     return (
