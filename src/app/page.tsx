@@ -1,6 +1,7 @@
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
 import { UserCircle } from "iconoir-react";
+import { JavascriptOriginal } from 'devicons-react';
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         <CustomButton>Login</CustomButton>
         <CustomButton theme="secondary">More news</CustomButton>
         <CustomButton theme="imageButton">
-          <ImageButton icon={<UserCircle />}>
+          <ImageButton icon={<JavascriptOriginal />}>
             Join now!
           </ImageButton>
         </CustomButton>
