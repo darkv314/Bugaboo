@@ -1,6 +1,5 @@
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
-import { UserCircle } from "iconoir-react";
 import { JavascriptOriginal } from 'devicons-react';
 
 export default function Home() {
