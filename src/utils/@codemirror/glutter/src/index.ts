@@ -1,20 +1,16 @@
-import { lineNumbers } from '@codemirror/view';
+import { gutter, GutterMarker } from "@codemirror/view"
 import { Extension } from '@codemirror/state';
 
-function formatNumber() {
-  return lineNumbers({
-    formatNumber: (lineNo, state) => {
-      if (lineNo > state.doc.lines) {
-        return '0';
-      }
-      const cursorLine = state.doc.lineAt(state.selection.asSingle().ranges[0].to).number;
-      if (lineNo === cursorLine) {
-        return '0';
-      } else {
-        return Math.abs(cursorLine - lineNo).toString();
-      }
+function addPlusGutter() {
+  const plusMarker = new class extends GutterMarker {
+    toDOM() { return document.createTextNode('\u{2795}') }
+  }
+  return gutter({
+    lineMarker(view, line) {
+      return plusMarker
     },
-  });
+    initialSpacer: () => plusMarker
+  })
 }
 
-export const lineNumbersRelative: Extension = [formatNumber()];
+export const linesAddPlusGutter: Extension = [addPlusGutter()];
