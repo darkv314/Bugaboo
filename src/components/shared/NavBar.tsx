@@ -11,8 +11,8 @@ export default function Navbar() {
     "text-secondary rounded-md text-sm font-medium circle flex items-center gap-3 [&>div]:border-secondary [&>div]:bg-secondary";
 
   return (
-    <nav className="bg-dark w-full py-10 px-72 backdrop-blur-md flex items-center justify-between">
-      <div className="flex-shrink-0">
+    <nav className="bg-dark w-full py-10 sm:px-72 backdrop-blur-md flex items-center justify-center xl:justify-between">
+      <div className="hidden xl:block">
         <ul className="flex gap-5 items-center">
           {navBarNoAuth.map((item, index) => (
             <li key={index}>
@@ -40,13 +40,11 @@ export default function Navbar() {
           ))}
         </ul>
       </div>
-      <div className="block">
-        <div className="flex gap-5 items-center">
-        <CustomButton theme={"secondary"}>Join</CustomButton>
+      <div className="flex sm:flex-row flex-col gap-5 items-center">
+        <CustomButton theme={"secondary"}>Login</CustomButton>
         <CustomButton theme="imageButton">
           <ImageButton icon={<SquareCursor />}>Join now!</ImageButton>
         </CustomButton>
-        </div>
       </div>
     </nav>
   );
