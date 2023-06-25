@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="bg-dark py-10 lg:px-72 w-full backdrop-blur-md">
       <div className="flex items-center justify-center lg:justify-between gap-3">
         <div className="flex items-start self-start h-full gap-44">
-          <div className="h-full flex flex-col items-start gap-8">
+          <div className="h-full flex flex-col items-center lg:items-start gap-8">
             <Title />
             <SocialIcons />
           </div>
