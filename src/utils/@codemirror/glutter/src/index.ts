@@ -1,16 +1,27 @@
-import { gutter, GutterMarker } from "@codemirror/view"
+import { EditorView, gutter, GutterMarker } from "@codemirror/view"
 import { Extension } from '@codemirror/state';
+import { StateField, StateEffect, RangeSet } from "@codemirror/state"
 
 function addPlusGutter() {
-  const plusMarker = new class extends GutterMarker {
-    toDOM() { return document.createTextNode('\u{2795}') }
+  const pluspointMarker = new class extends GutterMarker {
+    toDOM() { return document.createTextNode("\u{2795}") }
   }
-  return gutter({
-    lineMarker(view, line) {
-      return plusMarker
-    },
-    initialSpacer: () => plusMarker
-  })
+
+
+  const breakpointGutter = [
+    gutter({
+      lineMarker: () => pluspointMarker,
+      initialSpacer: () => pluspointMarker,
+      domEventHandlers: {
+        mousedown(view, line, event) {
+          console.log("mousedown", view)
+          return true
+        }
+      }
+    }),
+  ]
+
+  return breakpointGutter;
 }
 
 export const linesAddPlusGutter: Extension = [addPlusGutter()];
