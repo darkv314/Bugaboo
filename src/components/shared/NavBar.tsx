@@ -4,6 +4,7 @@ import Link from "next/link";
 import ActiveLink from "./NavLink";
 import CustomButton from "../interactive/CustomButton";
 import ImageButton from "../interactive/ImageButton";
+import { cabin } from "@/styles/fonts";
 
 export default function Navbar() {
   const defaultClass =
@@ -14,9 +15,9 @@ export default function Navbar() {
   return (
     <nav className="bg-dark w-full py-10 px-72 backdrop-blur-md flex items-center justify-between">
       <div className="flex-shrink-0">
-        <Link className="flex items-center gap-3" href="/">
+        <Link style={cabin.style} className="flex items-center gap-3" href="/">
           <ChatLines className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-primary">Bugaboo</span>
+          <h1 className="text-2xl font-bold text-primary">Bugaboo</h1>
         </Link>
       </div>
       <div className="hidden md:block">

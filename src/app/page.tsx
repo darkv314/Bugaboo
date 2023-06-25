@@ -6,6 +6,7 @@ import { dracula } from "@uiw/codemirror-theme-dracula";
 // import dynamic from "next/dynamic";
 import { LineModel } from "@/models/@codemirror/LineModel";
 import Navbar from "@/components/shared/NavBar";
+import Topbar from "@/components/shared/TopBar";
 
 // const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
 //   ssr: false,
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <>
       <header className="w-full">
+        <Topbar />
         <Navbar />
       </header>
       <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white">

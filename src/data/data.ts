@@ -40,3 +40,4 @@ export const navBarNoAuth: {
             icon: true
         }
     ];
+
