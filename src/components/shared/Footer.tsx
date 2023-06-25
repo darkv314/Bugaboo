@@ -30,6 +30,7 @@ export default function Footer() {
           className="text-primary"
           href="
         https://www.linkedin.com/in/vanessa-tejerina/"
+          target="_blank"
         >
           dark314
         </Link>
@@ -37,6 +38,7 @@ export default function Footer() {
         <Link
           className="text-primary"
           href="https://www.linkedin.com/in/joel-jarro/"
+          target="_blank"
         >
           Quirrod
         </Link>
