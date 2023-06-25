@@ -1,49 +1,16 @@
-import CustomButton from "@/components/interactive/CustomButton";
-import ImageButton from "@/components/interactive/ImageButton";
-import { CircleciPlain, JavaOriginal, JavascriptOriginal } from "devicons-react";
-import { javascript } from "@codemirror/lang-javascript";
-import { dracula } from "@uiw/codemirror-theme-dracula";
-// import dynamic from "next/dynamic";
-import { LineModel } from "@/models/@codemirror/LineModel";
-import Navbar from "@/components/shared/NavBar";
-import Topbar from "@/components/shared/TopBar";
-
-// const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
-//   ssr: false,
-// });
+import Image from "next/image";
+import heroImage from "@/assets/images/cuteBoo1.jpg";
 
 export default function Home() {
-    function handleComment(res: LineModel) {
-        console.log("comment", res);
-    }
-    return (
-        <>
-            <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white">
-                <div className="flex flex-col items-center justify-center gap-4">
-                    <CustomButton>Login</CustomButton>
-                    <CustomButton theme="secondary">More news</CustomButton>
-                    <CustomButton theme="imageButton">
-                        <ImageButton icon={<JavaOriginal />}>
-                            Join now!
-                        </ImageButton>
-                    </CustomButton>
-
-                    {/* <CodeMirror
-          value="console.log('hello world!');"
-          height="100svh"
-          width="40em"
-          theme={dracula}
-          extensions={[
-            javascript({ jsx: true }),
-            linesAddPlusGutter(handleComment, {
-              backgroundColor: "#3E404B",
-            }),
-          ]}
-          onChange={(value) => null}
-          placeholder={"// Enter your code here"}
-        /> */}
-                </div>
-            </main>
-        </>
-    );
+  return (
+    <main className="min-h-screen bg-white">
+      <div className="w-full h-[31em]">
+        <Image
+          src={heroImage}
+          alt="Hero Image"
+          className="object-cover object-center w-full h-full"
+        />
+      </div>
+    </main>
+  );
 }
