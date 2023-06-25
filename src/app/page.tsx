@@ -27,7 +27,7 @@ export default function Home() {
           width="40em"
           theme={dracula}
           extensions={[javascript({ jsx: true }), linesAddPlusGutter]}
-          onChange={(value) => console.log(value)}
+          onChange={(value) => null}
           placeholder={"// Enter your code here"}
         />
       </div>

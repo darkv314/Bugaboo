@@ -14,7 +14,10 @@ function addPlusGutter() {
       initialSpacer: () => pluspointMarker,
       domEventHandlers: {
         mousedown(view, line, event) {
-          console.log("mousedown", view)
+          // console.log(view.state.sliceDoc(line.from, line.to)) // !INFO: get line text
+
+          console.log(view.state.doc.lineAt(line.from))// !INFO: get line text and position
+
           return true
         }
       }
