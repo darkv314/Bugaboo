@@ -30,7 +30,7 @@ export default function Home() {
             <ImageButton icon={<JavascriptOriginal />}>Join now!</ImageButton>
           </CustomButton>
 
-          {/* <CodeMirror
+                {/* <CodeMirror
           value="console.log('hello world!');"
           height="100svh"
           width="40em"
