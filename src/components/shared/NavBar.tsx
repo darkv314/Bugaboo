@@ -1,7 +1,9 @@
 import { navBarNoAuth } from "@/data/data";
-import { ChatLines } from "iconoir-react";
+import { ChatLines, SquareCursor } from "iconoir-react";
 import Link from "next/link";
 import ActiveLink from "./NavLink";
+import CustomButton from "../interactive/CustomButton";
+import ImageButton from "../interactive/ImageButton";
 
 export default function Navbar() {
   const defaultClass =
@@ -18,17 +20,29 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="hidden md:block">
-        <ul className="flex gap-7 items-baseline">
+        <ul className="flex gap-5 items-center">
           {navBarNoAuth.map((item, index) => (
             <li key={index}>
-              <ActiveLink
-                activeClassName={activeClass}
-                defaultClassName={defaultClass}
-                href={item.path}
-              >
-                <div className="rounded-full border-2 border-white w-2 h-2 group-hover:border-primary group-hover:bg-primary"></div>
-                {item.name}
-              </ActiveLink>
+              {item.button ? (
+                <CustomButton theme={item.button}>
+                  {!item.icon ? (
+                    item.name
+                  ) : (
+                    <ImageButton icon={<SquareCursor />}>
+                      {item.name}
+                    </ImageButton>
+                  )}
+                </CustomButton>
+              ) : (
+                <ActiveLink
+                  activeClassName={activeClass}
+                  defaultClassName={defaultClass}
+                  href={item.path}
+                >
+                  <div className="rounded-full border-2 border-white w-2 h-2 group-hover:border-primary group-hover:bg-primary"></div>
+                  {item.name}
+                </ActiveLink>
+              )}
             </li>
           ))}
         </ul>

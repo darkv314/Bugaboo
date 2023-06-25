@@ -1,6 +1,6 @@
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
-import { JavascriptOriginal } from "devicons-react";
+import { CircleciPlain, JavascriptOriginal } from "devicons-react";
 import { javascript } from "@codemirror/lang-javascript";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 // import dynamic from "next/dynamic";
