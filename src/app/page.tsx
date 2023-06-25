@@ -13,24 +13,22 @@ import Topbar from "@/components/shared/TopBar";
 // });
 
 export default function Home() {
-  function handleComment(res: LineModel) {
-    console.log("comment", res);
-  }
-  return (
-    <>
-      <header className="w-full">
-        <Topbar />
-        <Navbar />
-      </header>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <CustomButton>Login</CustomButton>
-          <CustomButton theme="secondary">More news</CustomButton>
-          <CustomButton theme="imageButton">
-            <ImageButton icon={<JavascriptOriginal />}>Join now!</ImageButton>
-          </CustomButton>
+    function handleComment(res: LineModel) {
+        console.log("comment", res);
+    }
+    return (
+        <>
+            <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-white">
+                <div className="flex flex-col items-center justify-center gap-4">
+                    <CustomButton>Login</CustomButton>
+                    <CustomButton theme="secondary">More news</CustomButton>
+                    <CustomButton theme="imageButton">
+                        <ImageButton icon={<JavascriptOriginal />}>
+                            Join now!
+                        </ImageButton>
+                    </CustomButton>
 
-                {/* <CodeMirror
+                    {/* <CodeMirror
           value="console.log('hello world!');"
           height="100svh"
           width="40em"
@@ -44,8 +42,8 @@ export default function Home() {
           onChange={(value) => null}
           placeholder={"// Enter your code here"}
         /> */}
-        </div>
-      </main>
-    </>
-  );
+                </div>
+            </main>
+        </>
+    );
 }
