@@ -30,7 +30,12 @@ export default function Home() {
           height="100svh"
           width="40em"
           theme={dracula}
-          extensions={[javascript({ jsx: true }), linesAddPlusGutter(handleComment)]}
+          extensions={[
+            javascript({ jsx: true }),
+            linesAddPlusGutter(handleComment, {
+              backgroundColor: "#3E404B",
+            }),
+          ]}
           onChange={(value) => null}
           placeholder={"// Enter your code here"}
         />

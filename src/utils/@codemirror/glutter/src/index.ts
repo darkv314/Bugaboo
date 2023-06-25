@@ -1,7 +1,7 @@
-import { gutter, GutterMarker } from "@codemirror/view"
+import { EditorView, gutter, GutterMarker } from "@codemirror/view"
 import { Extension, Line } from '@codemirror/state';
 
-function addPlusGutter(onClickPlusGutter: (line: Line) => void) {
+function addPlusGutter(onClickPlusGutter: (line: Line) => void, styleGlutter: {}) {
   const pluspointMarker = new class extends GutterMarker {
     toDOM() { return document.createTextNode("\u{2795}") }
   }
@@ -9,6 +9,7 @@ function addPlusGutter(onClickPlusGutter: (line: Line) => void) {
 
   const breakpointGutter = [
     gutter({
+      class: "cm-breakpoint-gutter",
       lineMarker: () => pluspointMarker,
       initialSpacer: () => pluspointMarker,
       domEventHandlers: {
@@ -21,9 +22,16 @@ function addPlusGutter(onClickPlusGutter: (line: Line) => void) {
         }
       }
     }),
+    EditorView.baseTheme({
+      ".cm-breakpoint-gutter .cm-gutterElement": {
+        cursor: "pointer",
+        ...styleGlutter
+      }
+    })
   ]
+
 
   return breakpointGutter;
 }
 
-export const linesAddPlusGutter: (onClickPlusGutter: (line: Line) => void) => Extension = (onClickPlusGutter) => [addPlusGutter(onClickPlusGutter)];
+export const linesAddPlusGutter: (onClickPlusGutter: (line: Line) => void, styleGlutter: {}) => Extension = (onClickPlusGutter, styleGlutter) => [addPlusGutter(onClickPlusGutter, styleGlutter)];
