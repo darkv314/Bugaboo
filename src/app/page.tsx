@@ -1,6 +1,6 @@
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
-import { CircleciPlain, JavascriptOriginal } from "devicons-react";
+import { CircleciPlain, JavaOriginal, JavascriptOriginal } from "devicons-react";
 import { javascript } from "@codemirror/lang-javascript";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 // import dynamic from "next/dynamic";
@@ -23,7 +23,7 @@ export default function Home() {
                     <CustomButton>Login</CustomButton>
                     <CustomButton theme="secondary">More news</CustomButton>
                     <CustomButton theme="imageButton">
-                        <ImageButton icon={<JavascriptOriginal />}>
+                        <ImageButton icon={<JavaOriginal />}>
                             Join now!
                         </ImageButton>
                     </CustomButton>
