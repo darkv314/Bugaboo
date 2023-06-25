@@ -1,20 +1,29 @@
-import { lineNumbers } from '@codemirror/view';
-import { Extension } from '@codemirror/state';
+import { gutter, GutterMarker } from "@codemirror/view"
+import { Extension, Line } from '@codemirror/state';
 
-function formatNumber() {
-  return lineNumbers({
-    formatNumber: (lineNo, state) => {
-      if (lineNo > state.doc.lines) {
-        return '0';
+function addPlusGutter(onClickPlusGutter: (line: Line) => void) {
+  const pluspointMarker = new class extends GutterMarker {
+    toDOM() { return document.createTextNode("\u{2795}") }
+  }
+
+
+  const breakpointGutter = [
+    gutter({
+      lineMarker: () => pluspointMarker,
+      initialSpacer: () => pluspointMarker,
+      domEventHandlers: {
+        mousedown(view, line, event) {
+          // console.log(view.state.sliceDoc(line.from, line.to)) // !INFO: get line text
+          const lineClicked = view.state.doc.lineAt(line.from)// !INFO: get line text and position
+          onClickPlusGutter(lineClicked)
+
+          return true
+        }
       }
-      const cursorLine = state.doc.lineAt(state.selection.asSingle().ranges[0].to).number;
-      if (lineNo === cursorLine) {
-        return '0';
-      } else {
-        return Math.abs(cursorLine - lineNo).toString();
-      }
-    },
-  });
+    }),
+  ]
+
+  return breakpointGutter;
 }
 
-export const lineNumbersRelative: Extension = [formatNumber()];
+export const linesAddPlusGutter: (onClickPlusGutter: (line: Line) => void) => Extension = (onClickPlusGutter) => [addPlusGutter(onClickPlusGutter)];
