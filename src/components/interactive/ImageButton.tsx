@@ -8,13 +8,11 @@ interface ImageButtonProps {
 
 function ImageButton({ children, icon }: ImageButtonProps) {
   return (
-    <div className="flex gap-2 items-center">
-      <div
-        className="bg-secondary rounded-full text-black group-hover:bg-primary content-center flex items-center justify-center"
-      >
+    <div className="flex gap-2 items-center w-full">
+      <div className="bg-secondary rounded-full text-black group-hover:bg-primary content-center flex items-center justify-center">
         {icon}
       </div>
-      <p>{children}</p>
+      <span className="whitespace-nowrap">{children}</span>
     </div>
   );
 }

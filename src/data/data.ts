@@ -1,7 +1,7 @@
 export const navBarNoAuth: {
     name: string;
     path: string;
-    button?: "primary" | "secondary"| "imageButton" | undefined;
+    button?: "primary" | "secondary" | "imageButton" | undefined;
     icon?: boolean;
 }[] = [
         {
@@ -28,16 +28,5 @@ export const navBarNoAuth: {
             name: 'Codes',
             path: '/codes',
         },
-        {
-            name: 'Login',
-            path: '/login',
-            button: "secondary"
-        },
-        {
-            name: 'Join Now!',
-            path: '/register',
-            button: "imageButton",
-            icon: true
-        }
     ];
 

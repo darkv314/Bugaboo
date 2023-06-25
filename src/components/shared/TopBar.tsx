@@ -1,4 +1,5 @@
-import { FacebookTag, Instagram, Twitter, LinkedIn, Code } from "iconoir-react";
+import { cabin } from "@/styles/fonts";
+import { FacebookTag, Instagram, Twitter, LinkedIn, ChatLines } from "iconoir-react";
 
 export default function Topbar() {
   const defaultClass =
@@ -9,8 +10,8 @@ export default function Topbar() {
   return (
     <nav className="bg-dark w-full py-4 px-72 backdrop-blur-md flex items-center justify-between">
       <div className="flex-shrink-0 flex gap-2">
-        <Code className="text-xl text-primary" />
-        <span className="text-xl font-bold text-white">Bugaboo</span>
+        <ChatLines className="text-xl text-primary" />
+        <span style={cabin.style} className="text-xl font-bold text-white">Bugaboo</span>
       </div>
       <div className="hidden md:block">
         <ul className="flex gap-5 items-center">
