@@ -38,8 +38,10 @@ function Input({ id, label, type, validations, value = "" }: MainInputProps) {
     } = useFormContext();
 
     return (
-        <div className="input">
-            <label htmlFor={id}>{label}</label>
+        <div className="flex flex-col gap-1">
+            <label className="font-lato" htmlFor={id}>
+                {label}
+            </label>
             {type === "password" ? (
                 <PasswordInput id={id} validations={validations} />
             ) : type === "textarea" ? (
@@ -63,7 +65,7 @@ function AreaInput({ id, validations }: InputProps) {
     const { register } = useFormContext();
     return (
         <textarea
-            className="focus-within:outline-blue-500 w-full rounded-md p-1.5 outline-1 border-2 border-blue-500 border-collapse focus-within:outline-2"
+            className="border border-black rounded-lg p-3 font-lato"
             // name={id}
             id={id}
             cols={40}
@@ -99,8 +101,9 @@ function SelectInput({ id, validations }: InputProps) {
                         styles={{
                             control: (baseStyles) => ({
                                 ...baseStyles,
-                                borderColor: "#3b82f6",
-                                borderWidth: "2px",
+                                borderColor: "black",
+                                borderWidth: "1px",
+                                fontFamily: "Lato",
                             }),
                         }}
                         // onChange={(selectedOption) =>
@@ -118,7 +121,7 @@ function TextInput({ id, validations, value, type }: InputProps) {
     const { register } = useFormContext();
     return (
         <input
-            className="appearance-none focus-within:outline-blue-500 w-full rounded-md p-1.5 outline-1 border-2 border-blue-500 border-collapse focus-within:outline-2"
+            className="border border-black rounded-full py-1 px-3 font-lato"
             type={type}
             {...register(id, validations)}
             defaultValue={value}
@@ -132,14 +135,14 @@ function PasswordInput({ id, validations }: InputProps) {
     return (
         <div className="flex">
             <input
-                className="appearance-none focus-within:outline-blue-500 w-full rounded-s-md p-1.5 outline-1 border-t-2 border-l-2 border-b-2 border-blue-500 border-collapse"
+                className="font-lato w-full rounded-s-full border-t border-l border-b border border-black border-collapse py-1 px-3"
                 type={showPassword ? "text" : "password"}
                 {...register(id, validations)}
             />
             <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="px-1 border-2 border-blue-500 rounded-r-md focus:outline-none"
+                className="px-2 grid place-items-center border border-black rounded-r-full"
             >
                 <IconoirProvider>
                     {showPassword ? <EyeEmpty /> : <EyeOff />}
