@@ -9,7 +9,7 @@ export const Codes = () => {
       id="codes"
       className="lg:px-72 py-40 text-center flex flex-col gap-10 bg-light"
     >
-      <Badge theme="secondary">Services</Badge>
+      <Badge theme="secondary">CoDes</Badge>
       <div className="inline-flex xl:gap-96 justify-between">
         <h1 className="text-start text-xl sm:text-4xl font-bold font-cabin flex-1">
           Take a look at some codes who need you!
