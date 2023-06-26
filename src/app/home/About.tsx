@@ -7,9 +7,9 @@ import Badge from "@/components/badge/Badge";
 
 export const About = () => {
   return (
-    <div id="about" className="px-4 lg:px-72 py-40 flex gap-16">
+    <div className="px-4 lg:px-72 py-40 flex gap-16">
       <div className="flex flex-col gap-4 grow">
-        <Badge>About US</Badge>
+        <Badge id="about">About US</Badge>
         <h1 className="text-4xl font-bold font-cabin">
           About our Boos to the bugs
         </h1>

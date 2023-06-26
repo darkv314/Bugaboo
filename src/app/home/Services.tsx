@@ -12,11 +12,10 @@ import { ServicesCard } from "./ServicesCard";
 
 export const Services = () => {
   return (
-    <div
-      id="services"
-      className="lg:px-72 py-40 text-center flex flex-col gap-10 bg-light"
-    >
-      <Badge theme="secondary">Services</Badge>
+    <div className="lg:px-72 py-40 text-center flex flex-col gap-10 bg-light">
+      <Badge id="services" theme="secondary">
+        Services
+      </Badge>
       <h1 className="text-xl sm:text-4xl font-bold font-cabin">Our Services</h1>
       <div className="grid auto-rows-auto grid-cols-auto-fill-15 gap-2">
         <ServicesCard

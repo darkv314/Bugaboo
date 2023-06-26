@@ -4,11 +4,10 @@ import { StepsCard } from "./StepsCard";
 
 export const Steps = () => {
   return (
-    <div
-      id="steps"
-      className="lg:px-96 py-40 text-center flex flex-col gap-10 bg-white"
-    >
-      <Badge theme="secondary">Services</Badge>
+    <div className="lg:px-96 py-40 text-center flex flex-col gap-10 bg-white">
+      <Badge id="steps" theme="secondary">
+        Services
+      </Badge>
       <h1 className="text-xl sm:text-4xl font-bold font-cabin">
         There have some easy steps to join!
       </h1>
