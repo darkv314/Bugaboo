@@ -26,4 +26,3 @@ export const navBarNoAuth: ILink[] = [
         path: '/#codes',
     },
 ];
-

@@ -27,6 +27,10 @@ module.exports = {
                 light: "#F5F5F5",
                 textColor: "1C1C1C",
             },
+            gridTemplateColumns: {
+                'auto-fill-15': 'repeat(auto-fill, minmax(15em, 1fr))',
+                'auto-fit-15': 'repeat(auto-fit, minmax(15em, 1fr))',
+              },
         },
     },
     plugins: [],
