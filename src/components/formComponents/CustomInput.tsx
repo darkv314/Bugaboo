@@ -11,6 +11,14 @@ type MainInputProps = {
     type: string;
     value?: string;
     validations?: {
+        minLength?: {
+            value: number;
+            message: string;
+        };
+        maxLength?: {
+            value: number;
+            message: string;
+        };
         required?: string;
         pattern?: {
             value: RegExp;
@@ -23,6 +31,14 @@ type InputProps = {
     id: string;
     validations?: {
         required?: string;
+        minLength?: {
+            value: number;
+            message: string;
+        };
+        maxLength?: {
+            value: number;
+            message: string;
+        };
         pattern?: {
             value: RegExp;
             message: string;
@@ -65,7 +81,7 @@ function AreaInput({ id, validations }: InputProps) {
     const { register } = useFormContext();
     return (
         <textarea
-            className="border border-black rounded-lg p-3 font-lato"
+            className="border border-secondaryDark rounded-lg p-3 font-lato"
             // name={id}
             id={id}
             cols={40}
@@ -121,7 +137,7 @@ function TextInput({ id, validations, value, type }: InputProps) {
     const { register } = useFormContext();
     return (
         <input
-            className="border border-black rounded-full py-1 px-3 font-lato"
+            className="border border-secondaryDark rounded-full py-2 px-3 font-lato"
             type={type}
             {...register(id, validations)}
             defaultValue={value}
@@ -131,18 +147,28 @@ function TextInput({ id, validations, value, type }: InputProps) {
 
 function PasswordInput({ id, validations }: InputProps) {
     const [showPassword, setShowPassword] = useState(false);
-    const { register } = useFormContext();
+    const { register, watch } = useFormContext();
     return (
         <div className="flex">
             <input
-                className="font-lato w-full rounded-s-full border-t border-l border-b border border-black border-collapse py-1 px-3"
+                className="font-lato w-full rounded-s-full border-t border-l border-b border-secondaryDark border-collapse py-2 px-3"
                 type={showPassword ? "text" : "password"}
-                {...register(id, validations)}
+                {...register(id, {
+                    ...validations,
+                    validate: (val: string) => {
+                        if (
+                            id === "confirmPassword" &&
+                            watch("password") != val
+                        ) {
+                            return "Your passwords do not match";
+                        }
+                    },
+                })}
             />
             <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="px-2 grid place-items-center border border-black rounded-r-full"
+                className="px-2 bg-white grid place-items-center border-t border-r border-b border-secondaryDark rounded-r-full"
             >
                 <IconoirProvider>
                     {showPassword ? <EyeEmpty /> : <EyeOff />}

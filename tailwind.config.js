@@ -7,6 +7,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            screens: {
+                xs: "450px",
+            },
             fontFamily: {
                 cabin: ["Cabin", "sans-serif"],
                 lato: ["Lato", "sans-serif"],

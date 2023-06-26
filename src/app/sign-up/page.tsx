@@ -2,7 +2,7 @@ import SignUpForm from "./SignUpForm";
 
 function page() {
     return (
-        <div className="h-[31rem] flex justify-center items-center bg-light">
+        <div className="relative h-[42rem] flex justify-center items-center bg-light z-10">
             <SignUpForm />
         </div>
     );
