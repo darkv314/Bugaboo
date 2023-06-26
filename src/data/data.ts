@@ -7,11 +7,11 @@ export const navBarNoAuth: ILink[] = [
     },
     {
         name: 'About',
-        path: '/#about?as=sad',
+        path: '/#about',
     },
     {
         name: 'Services',
-        path: '/#services?as=sad',
+        path: '/#services',
     },
     {
         name: 'Steps',
