@@ -3,8 +3,8 @@ import React from "react";
 import CustomButton from "../interactive/CustomButton";
 import ImageButton from "../interactive/ImageButton";
 import { SquareCursor } from "iconoir-react";
-import ActiveLink from "./NavLink";
 import { ILink } from "@/models/links";
+import Link from "next/link";
 
 interface LinksProps {
   linksList: ILink[];
@@ -31,14 +31,13 @@ export const Links: React.FC<LinksProps> = ({ linksList, isRow }) => {
                 )}
               </CustomButton>
             ) : (
-              <ActiveLink
-                activeClassName={activeClass}
-                defaultClassName={defaultClass}
+              <Link
+                className={defaultClass}
                 href={item.path}
               >
                 <div className="rounded-full border-2 border-white w-2 h-2 group-hover:border-primary group-hover:bg-primary"></div>
                 {item.name}
-              </ActiveLink>
+              </Link>
             )}
           </li>
         );
