@@ -1,11 +1,24 @@
+"use client";
+
 import Badge from "@/components/badge/Badge";
-import CustomCard from "@/components/cards/CustomCard";
-import { Star, FaceId } from "iconoir-react";
 import { Hero } from "./Hero";
 import { CodeCard } from "@/components/cards/CodeCard";
+import { Pagination } from "nextjs-pagination";
+import { ArrowLeftCircle, ArrowRightCircle } from "iconoir-react";
+import React from "react";
 
 function page() {
-  const codes = Array.from({ length: 10 }, (_, i) => i);
+  const codes = Array.from({ length: 20 }, (_, i) => i);
+  const [showCodes, setShowCodes] = React.useState<number[]>(
+    codes.slice(0, 10)
+  );
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const itemsPerPage = 10;
+
+  const handlePageChange = (page: number) => {
+    setShowCodes(codes.slice((page - 1) * 10, page * 10));
+  };
+
   return (
     <main className="min-h-screen bg-white">
       <Hero />
@@ -19,10 +32,22 @@ function page() {
           </h1>
         </div>
         <div className="grid auto-rows-auto grid-cols-auto-fill-20 sm:gap-20">
-          {codes.map((code, index) => (
+          {showCodes.map((code, index) => (
             <CodeCard key={index} />
           ))}
         </div>
+      </div>
+      <div className="py-2 flex flex-col justify-center items-center">
+        <Pagination
+          onPageChange={handlePageChange}
+          totalItems={codes.length}
+          itemsPerPage={itemsPerPage}
+          color="#181818"
+          onSuccess={(page: number) => console.log("Current page: ", showCodes)}
+          onError={(error: React.ErrorInfo) => console.error(error)}
+          prevText={<ArrowLeftCircle className="inline-block" />}
+          nextText={<ArrowRightCircle className="inline-block" />}
+        />
       </div>
     </main>
   );
