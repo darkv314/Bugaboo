@@ -1,7 +1,6 @@
 import Image from "next/image";
 import heroImage from "@/assets/images/cuteBoo1.jpg";
 import WhiteTransparentCard from "@/components/cards/WhiteTransparentCard";
-import { cabin } from "@/styles/fonts";
 import CustomButton from "@/components/interactive/CustomButton";
 import ImageButton from "@/components/interactive/ImageButton";
 import { ArrowRightCircle } from "iconoir-react";
