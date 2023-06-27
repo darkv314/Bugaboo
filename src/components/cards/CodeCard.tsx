@@ -5,7 +5,7 @@ import codeImage from "@/assets/images/cuteBoo3.jpg";
 
 export const CodeCard = () => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4">
       <Image
         src={codeImage}
         alt="Hero Image"
@@ -30,9 +30,9 @@ export const CodeCard = () => {
         <div className="hidden sm:block w-px h-6 bg-secondaryDark"></div>
 
         <span className="text-start text-sm font-cabin">PerryTech</span>
-        <span className="hidden sm:block text-start text-sm font-cabin">
+        <time className="hidden sm:block text-start text-sm font-cabin">
           September 1, 2022
-        </span>
+        </time>
         <div>
           <CustomButton theme="primary">Comment</CustomButton>
         </div>
