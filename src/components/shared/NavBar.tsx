@@ -5,12 +5,12 @@ import { Links } from "./Links";
 import { navBarAuth, navBarNoAuth } from "@/data/data";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
+import { use, useEffect } from "react";
+import { userService } from "@/services/userServices";
 
 export default function Navbar() {
   const { auth } = useAuth();
-  console.log("TCL: Navbar -> auth", auth);
   const isAuth = auth.token && auth.userId ? true : false;
-
   const links = isAuth ? navBarAuth : navBarNoAuth;
 
   return (
@@ -28,7 +28,7 @@ export default function Navbar() {
           <CustomButton theme="imageButton">
             <ImageButton icon={isAuth ? <User /> : <SquareCursor />}>
               <span className="whitespace-nowrap">
-                {isAuth ? "Profile" : "Sign Up"}
+                {isAuth ? auth.username : "Sign Up"}
               </span>
             </ImageButton>
           </CustomButton>

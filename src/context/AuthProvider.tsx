@@ -10,6 +10,7 @@ type AuthProviderProps = {
 export type AuthContextType = {
     userId: string;
     token: string;
+    username?: string;
     // user: {
 
     // }

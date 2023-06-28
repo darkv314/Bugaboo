@@ -27,6 +27,7 @@ function LoginForm() {
             setAuth({
                 userId: response.data.user.id,
                 token: response.data.jwt,
+                username: response.data.user.username,
             });
             router.push("/shared-codes");
         },

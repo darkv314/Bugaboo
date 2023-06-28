@@ -19,7 +19,7 @@ export const Links: React.FC<LinksProps> = ({ linksList, isRow }) => {
 
     return (
         <ul className={`flex gap-5 items-start ${!isRow && "flex-col"}`}>
-            {navBarNoAuth.map((item, index) => {
+            {linksList.map((item, index) => {
                 return (
                     <li key={index}>
                         {item.button ? (
