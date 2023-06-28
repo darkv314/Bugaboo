@@ -16,11 +16,12 @@ const badgeConfig = {
 type ButtonProps = {
   theme?: keyof typeof badgeConfig;
   children: ReactNode;
+  id?: string;
 };
 
-function Badge({ theme = "primary", children }: ButtonProps) {
+function Badge({ theme = "primary", children, id }: ButtonProps) {
   return (
-    <div>
+    <div id={id}>
       <span
         className={`${badgeConfig[theme]?.bgColor} 
       ${badgeConfig[theme]?.textColor}  text-base py-2 px-3 rounded-3xl uppercase`}
