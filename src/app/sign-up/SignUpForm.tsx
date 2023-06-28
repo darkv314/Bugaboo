@@ -2,6 +2,11 @@
 import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
 import { EMAIL_CHECK } from "@/helpers/regex";
+import useAuth from "@/hooks/useAuth";
+import { registerUser } from "@/services/auth";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 
 type SignUpFormInputs = {
@@ -13,9 +18,29 @@ type SignUpFormInputs = {
 
 function SignUpForm() {
     const methods = useForm<SignUpFormInputs>();
+    const { setAuth } = useAuth();
+    const router = useRouter();
+
     function onSubmit(data: SignUpFormInputs) {
-        console.log(data);
+        signUpMutation.mutate(data);
     }
+
+    const signUpMutation = useMutation({
+        mutationFn: (data: SignUpFormInputs) => {
+            return registerUser(data.username, data.email, data.password);
+        },
+        onSuccess: (response: AxiosResponse) => {
+            console.log(response);
+            setAuth({
+                userId: response.data.user.id,
+                token: response.data.jwt,
+            });
+            router.push("/private-page");
+        },
+        onError: (error: any) => {
+            console.log(error);
+        },
+    });
     return (
         <div className="relative flex flex-col rounded-2xl items-center bg-white/80 w-5/6 xs:w-7/12 sm:w-1/2 md:w-2/5 lg:w-[32%] m-4 py-12 px-12 gap-2">
             <h1 className="text-3xl text-black font-extrabold font-cabin">

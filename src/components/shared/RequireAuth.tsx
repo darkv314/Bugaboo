@@ -20,5 +20,7 @@ function Redirect() {
     useEffect(() => {
         router.push("/login");
     }, []);
-    return <>Unauthorized</>;
+    return (
+        <div className="h-[500px] grid place-items-center">Unauthorized 😢</div>
+    );
 }
