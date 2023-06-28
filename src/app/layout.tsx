@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import Navbar from "@/components/shared/NavBar";
 import Topbar from "@/components/shared/TopBar";
 import Footer from "@/components/shared/Footer";
+import { AuthProvider } from "@/context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,22 +23,24 @@ export default function RootLayout({
 }) {
     return (
         <QueryClientProvider client={queryClient}>
-            <html lang="en">
-                <meta charSet="UTF'8" />
-                <link rel="icon" href="./favicon.ico" />
-                <title>Bugaboo</title>
+            <AuthProvider>
+                <html lang="en">
+                    <meta charSet="UTF'8" />
+                    <link rel="icon" href="./favicon.ico" />
+                    <title>Bugaboo</title>
 
-                <body className={`${inter.className} min-h-screen`}>
-                    <header className="w-full">
-                        <Topbar />
-                        <Navbar />
-                    </header>
-                    {children}
-                    <footer>
-                        <Footer />
-                    </footer>
-                </body>
-            </html>
+                    <body className={`${inter.className} min-h-screen`}>
+                        <header className="w-full">
+                            <Topbar />
+                            <Navbar />
+                        </header>
+                        {children}
+                        <footer>
+                            <Footer />
+                        </footer>
+                    </body>
+                </html>
+            </AuthProvider>
         </QueryClientProvider>
     );
 }

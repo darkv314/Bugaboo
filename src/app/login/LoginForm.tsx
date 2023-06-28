@@ -1,6 +1,11 @@
 "use client";
 import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
+import useAuth from "@/hooks/useAuth";
+import { loginUser } from "@/services/auth";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
 
 type LoginFormInputs = {
@@ -10,9 +15,28 @@ type LoginFormInputs = {
 
 function LoginForm() {
     const methods = useForm<LoginFormInputs>();
+    const router = useRouter();
+    const { setAuth } = useAuth();
+
+    const loginMutation = useMutation({
+        mutationFn: (data: LoginFormInputs) => {
+            return loginUser(data.username, data.password);
+        },
+        onSuccess: (response: AxiosResponse) => {
+            console.log(response);
+            setAuth({
+                userId: response.data.user.id,
+                token: response.data.jwt,
+            });
+            router.push("/private-page");
+        },
+        onError: (error: any) => {
+            console.log(error);
+        },
+    });
 
     function onSubmit(data: LoginFormInputs) {
-        console.log(data);
+        loginMutation.mutate(data);
     }
 
     return (
@@ -44,7 +68,9 @@ function LoginForm() {
                                 }}
                             />
                         </span>
-                        <CustomButton theme="secondary">Login</CustomButton>
+                        <CustomButton theme="secondary">
+                            {loginMutation.isLoading ? "Loading..." : "Login"}
+                        </CustomButton>
                     </form>
                 </FormProvider>
                 <span className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-2xl -z-10 login-card hidden xs:block"></span>
