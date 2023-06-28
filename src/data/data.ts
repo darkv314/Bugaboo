@@ -26,3 +26,19 @@ export const navBarNoAuth: ILink[] = [
         path: '/#codes',
     },
 ];
+
+
+export const navBarAuth: ILink[] = [
+    {
+        name: 'Home',
+        path: '/',
+    },
+    {
+        name: 'Codes',
+        path: '/shared-codes',
+    },
+    {
+        name: 'My Codes',
+        path: '/my-codes',
+    },
+];

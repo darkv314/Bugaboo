@@ -35,7 +35,7 @@ function SignUpForm() {
                 userId: response.data.user.id,
                 token: response.data.jwt,
             });
-            router.push("/private-page");
+            router.push("/shared-codes");
         },
         onError: (error: any) => {
             console.log(error);
