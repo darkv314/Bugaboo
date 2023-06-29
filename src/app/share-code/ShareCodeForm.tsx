@@ -40,7 +40,9 @@ function ShareCodeForm() {
     });
 
     function onSubmit(data: ShareCodeFormInputs) {
-        shareCodeMutation.mutate(data);
+        console.log(data);
+        //uncomment when code is ready
+        //shareCodeMutation.mutate(data);
     }
 
     return (
