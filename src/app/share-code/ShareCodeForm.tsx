@@ -90,7 +90,6 @@ function ShareCodeForm() {
                         </CustomButton>
                     </form>
                 </FormProvider>
-                <span className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-2xl -z-10 login-card hidden xs:block"></span>
             </div>
         </>
     );

@@ -7,45 +7,45 @@ import { LineModel } from "@/models/@codemirror/LineModel";
 import { linesAddPlusGutter } from "@/utils/@codemirror/glutter/src";
 
 interface CodeMirrorProps {
-  value: string;
-  height?: string;
-  width?: string;
-  language?: string;
+    value: string;
+    height?: string;
+    width?: string;
+    language?: string;
 }
 export const CodeMirror: React.FC<CodeMirrorProps> = ({
-  value,
-  height = "100svh",
-  width = "width: 100%",
-  language = null,
+    value,
+    height = "100svh",
+    width = "width: 100%",
+    language = null,
 }) => {
-  const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
-    ssr: false,
-  });
+    const CodeMirror = dynamic(() => import("@uiw/react-codemirror"), {
+        ssr: false,
+    });
 
-  const handleComment = (line: LineModel) => {
-    console.log(line);
-  };
+    const handleComment = (line: LineModel) => {
+        console.log(line);
+    };
 
-  const extensions = [
-    linesAddPlusGutter(handleComment, {
-      backgroundColor: "#3E404B",
-    }),
-  ];
+    const extensions = [
+        linesAddPlusGutter(handleComment, {
+            backgroundColor: "#3E404B",
+        }),
+    ];
 
-  const languagePlugin =
-    language === "javascript"
-      ? extensions.push(javascript({ jsx: true }))
-      : null;
+    const languagePlugin =
+        language === "javascript"
+            ? extensions.push(javascript({ jsx: true }))
+            : null;
 
-  return (
-    <CodeMirror
-      value={value}
-      height={height}
-      width={width}
-      theme={dracula}
-      extensions={extensions}
-      onChange={(value) => null}
-      placeholder={"// Enter your code here"}
-    />
-  );
+    return (
+        <CodeMirror
+            value={value}
+            height={height}
+            width={width}
+            theme={dracula}
+            extensions={extensions}
+            onChange={(value) => null}
+            placeholder={"// Enter your code here"}
+        />
+    );
 };
