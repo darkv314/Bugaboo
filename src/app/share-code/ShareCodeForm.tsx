@@ -3,27 +3,27 @@ import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
 import LoadingLabel from "@/components/interactive/LoadingLabel";
 import useAuth from "@/hooks/useAuth";
-import { loginUser } from "@/services/auth";
+import { shareCode } from "@/services/codeServices";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
 
-type LoginFormInputs = {
-    username: string;
-    password: string;
+type ShareCodeFormInputs = {
+    title: string;
+    description: string;
+    language: string;
+    code: string;
 };
 
-function LoginForm() {
-    const methods = useForm<LoginFormInputs>();
+function ShareCodeForm() {
+    const methods = useForm<ShareCodeFormInputs>();
     const router = useRouter();
-    const { setAuth } = useAuth();
+    const { auth, setAuth } = useAuth();
 
-    const loginMutation = useMutation({
-        mutationFn: (data: LoginFormInputs) => {
-            return loginUser(data.username, data.password);
+    const shareCodeMutation = useMutation({
+        mutationFn: (data: ShareCodeFormInputs) => {
+            return shareCode(auth.token, data);
         },
         onSuccess: (response: AxiosResponse) => {
             console.log(response);
@@ -39,15 +39,15 @@ function LoginForm() {
         },
     });
 
-    function onSubmit(data: LoginFormInputs) {
-        loginMutation.mutate(data);
+    function onSubmit(data: ShareCodeFormInputs) {
+        shareCodeMutation.mutate(data);
     }
 
     return (
         <>
-            <div className="relative flex flex-col rounded-2xl items-center bg-white/80 w-5/6 xs:w-7/12 sm:w-1/2 md:w-2/5 lg:w-[32%] m-4 py-12 px-12 gap-2">
+            <div className="relative flex flex-col rounded-2xl items-center bg-white/80 gap-2">
                 <h1 className="text-3xl text-black font-extrabold font-cabin">
-                    Login
+                    Share Code!🤓
                 </h1>
                 <FormProvider {...methods}>
                     <form
@@ -56,26 +56,34 @@ function LoginForm() {
                     >
                         <span>
                             <CustomInput
-                                id="username"
-                                label="Username"
+                                id="title"
+                                label="Title"
                                 type="text"
                                 validations={{
-                                    required: "Username is required",
+                                    required: "Title is required",
                                 }}
                             />
                             <CustomInput
-                                id="password"
-                                label="Password"
-                                type="password"
+                                id="description"
+                                label="Description"
+                                type="textarea"
                                 validations={{
-                                    required: "Password is required",
+                                    required: "Description is required",
+                                }}
+                            />
+                            <CustomInput
+                                id="language"
+                                label="Language"
+                                type="multiselect"
+                                validations={{
+                                    required: "Language is required",
                                 }}
                             />
                         </span>
                         <CustomButton theme="secondary">
                             <LoadingLabel
-                                message="Login"
-                                state={loginMutation.isLoading}
+                                message="Share Code"
+                                state={shareCodeMutation.isLoading}
                             />
                         </CustomButton>
                     </form>
@@ -86,4 +94,4 @@ function LoginForm() {
     );
 }
 
-export default LoginForm;
+export default ShareCodeForm;

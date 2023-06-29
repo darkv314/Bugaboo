@@ -8,7 +8,7 @@ import { options } from "./data";
 type MainInputProps = {
     id: string;
     label: string;
-    type: string;
+    type?: "text" | "password" | "textarea" | "multiselect";
     value?: string;
     validations?: {
         minLength?: {
@@ -44,11 +44,17 @@ type InputProps = {
             message: string;
         };
     };
-    type?: string;
+    type?: "text" | "password" | "textarea" | "multiselect";
     value?: string;
 };
 
-function Input({ id, label, type, validations, value = "" }: MainInputProps) {
+function Input({
+    id,
+    label,
+    type = "text",
+    validations,
+    value = "",
+}: MainInputProps) {
     const {
         formState: { errors },
     } = useFormContext();
@@ -81,7 +87,7 @@ function AreaInput({ id, validations }: InputProps) {
     const { register } = useFormContext();
     return (
         <textarea
-            className="border border-secondaryDark rounded-lg p-3 font-lato"
+            className="border border-secondaryDark rounded-3xl p-3 font-lato"
             // name={id}
             id={id}
             cols={40}
@@ -111,7 +117,7 @@ function SelectInput({ id, validations }: InputProps) {
                 render={({ field }) => (
                     <Select
                         {...field}
-                        isMulti
+                        // isMulti
                         options={options}
                         value={field.value}
                         styles={{
@@ -120,6 +126,7 @@ function SelectInput({ id, validations }: InputProps) {
                                 borderColor: "black",
                                 borderWidth: "1px",
                                 fontFamily: "Lato",
+                                borderRadius: "1.5rem",
                             }),
                         }}
                         // onChange={(selectedOption) =>

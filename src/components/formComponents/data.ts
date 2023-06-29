@@ -31,8 +31,4 @@ export const options = [
         value: "Html",
         label: "Html",
     },
-    {
-        value: "Tailwind",
-        label: "Tailwind",
-    },
 ];
