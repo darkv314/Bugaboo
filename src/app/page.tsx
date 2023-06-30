@@ -16,7 +16,7 @@ export default function Home() {
       <About />
       <Services />
       <Steps />
-      <Codes />
+      {/* <Codes /> */}
     </main>
   );
 }
