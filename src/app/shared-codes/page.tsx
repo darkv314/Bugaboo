@@ -8,14 +8,14 @@ import { ArrowLeftCircle, ArrowRightCircle } from "iconoir-react";
 import React, { useEffect } from "react";
 import { codeService } from "@/services/codeServices";
 import useAuth from "@/hooks/useAuth";
-import { Code } from "@/models/code";
+import { Code, CodeGet } from "@/models/code";
 
 function page() {
   const itemsPerPage = 10;
 
   const { auth, setAuth } = useAuth();
-  const [codes, setCodes] = React.useState<Code[]>([]); 
-  const [showCodes, setShowCodes] = React.useState<Code[]>(
+  const [codes, setCodes] = React.useState<CodeGet[]>([]);
+  const [showCodes, setShowCodes] = React.useState<CodeGet[]>(
     codes.slice(0, itemsPerPage)
   );
   const [currentPage, setCurrentPage] = React.useState<number>(1);
@@ -26,7 +26,7 @@ function page() {
 
   useEffect(() => {
     // if (auth.token) {
-      codeService.getCodes(auth.token).then((res) => setCodes(res.data));
+    codeService.getCodes(auth.token).then((res) => setCodes(res.data));
     // }
   }, []);
 
@@ -49,7 +49,7 @@ function page() {
         </div>
         <div className="grid auto-rows-auto grid-cols-auto-fill-20 sm:gap-20">
           {showCodes.map((code, index) => (
-            <CodeCard key={index} />
+            <CodeCard code={code.attributes} idUser={code.id} key={code.id} />
           ))}
         </div>
       </div>

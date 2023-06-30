@@ -2,8 +2,14 @@ import React from "react";
 import CustomButton from "../interactive/CustomButton";
 import Image from "next/image";
 import codeImage from "@/assets/images/cuteBoo3.jpg";
+import { Code } from "@/models/code";
 
-export const CodeCard = () => {
+interface CodeCardProps {
+  code: Code;
+  idUser: number;
+}
+
+export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
   return (
     <div className="w-full flex flex-col gap-4">
       {/* <Image
@@ -12,13 +18,10 @@ export const CodeCard = () => {
         className="object-cover object-center w-full h-48 rounded-lg"
       /> */}
       <h1 className="text-start text-lg sm:text-2xl font-bold font-cabin">
-        Code 1
+        {code.title}
       </h1>
       <p className="text-start text-sm md:text-base line-clamp-4 text-secondaryDark">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-        inventore itaque dolores reiciendis asperiores deserunt. Dignissimos aut
-        accusamus, iusto, esse dolorum cum, culpa aspernatur sunt porro cumque
-        modi! Facilis, qui!
+        {code.description}
       </p>
       <hr className="border-px border-secondaryDark"></hr>
       <div className="flex flex-row sm:gap-4 items-center justify-around sm:justify-between">
