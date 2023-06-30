@@ -34,7 +34,9 @@ export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
         />
         <div className="hidden sm:block w-px h-6 bg-secondaryDark"></div>
 
-        <span className="text-start text-sm font-cabin">PerryTech</span>
+        <span className="text-start text-sm font-cabin">
+          {code.users_permissions_user.data.attributes.username}
+        </span>
         <time className="hidden sm:block text-start text-sm font-cabin">
           {pubDate.toLocaleString()}
         </time>

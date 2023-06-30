@@ -6,7 +6,7 @@ import { AxiosResponse } from "axios";
 
 export const codeService = {
     async getCodes(token: string) {
-        const url = `/codes`;
+        const url = `/codes?populate=*`;
         const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
