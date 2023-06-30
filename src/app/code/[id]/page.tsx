@@ -51,7 +51,7 @@ export default function Page() {
     codeService.getCode(auth.token, Number(id)).then((res) => {
       setCode(res.data.attributes);
     });
-  }, []);
+  }, [modalOpen]);
 
   return (
     <main className="min-h-screen bg-white px-4 lg:px-72 py-8 flex flex-col gap-4">
