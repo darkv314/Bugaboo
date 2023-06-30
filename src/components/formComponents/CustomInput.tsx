@@ -8,6 +8,7 @@ import { options } from "./data";
 type MainInputProps = {
     id: string;
     label: string;
+    rows?: number;
     type?: "text" | "password" | "textarea" | "multiselect";
     value?: string;
     validations?: {
@@ -29,6 +30,7 @@ type MainInputProps = {
 
 type InputProps = {
     id: string;
+    rows?: number;
     validations?: {
         required?: string;
         minLength?: {
@@ -54,6 +56,7 @@ function Input({
     type = "text",
     validations,
     value = "",
+    rows = 10,
 }: MainInputProps) {
     const {
         formState: { errors },
@@ -67,7 +70,7 @@ function Input({
             {type === "password" ? (
                 <PasswordInput id={id} validations={validations} />
             ) : type === "textarea" ? (
-                <AreaInput id={id} validations={validations} />
+                <AreaInput rows={rows} id={id} validations={validations} />
             ) : type === "multiselect" ? (
                 <SelectInput id={id} />
             ) : (
@@ -83,7 +86,7 @@ function Input({
     );
 }
 
-function AreaInput({ id, validations }: InputProps) {
+function AreaInput({ id, validations, rows = 10 }: InputProps) {
     const { register } = useFormContext();
     return (
         <textarea
@@ -91,7 +94,7 @@ function AreaInput({ id, validations }: InputProps) {
             // name={id}
             id={id}
             cols={40}
-            rows={10}
+            rows={rows}
             // value={value}
             {...register(id, validations)}
             // placeholder={inside}

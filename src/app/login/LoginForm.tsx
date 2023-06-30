@@ -8,8 +8,6 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
 
 type LoginFormInputs = {
     username: string;
@@ -18,6 +16,7 @@ type LoginFormInputs = {
 
 function LoginForm() {
     const methods = useForm<LoginFormInputs>();
+    const url = window.location.href;
     const router = useRouter();
     const { setAuth } = useAuth();
 

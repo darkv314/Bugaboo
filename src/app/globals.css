@@ -11,3 +11,7 @@ h5,
 h6 {
     font-family: var(--font-cabin);
 }
+
+.bg-black-transparent {
+    background-color: rgba(0, 0, 0, 0.8);
+}
