@@ -11,13 +11,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 import { javascript } from "@codemirror/lang-javascript";
+import { UserI } from "@/models/user";
 
 type ShareCodeFormInputs = {
   title: string;
   description: string;
   language: string;
   code: string;
-  users_permissions_user: number;
+  users_permissions_user: number
   createdAt: string;
 };
 
@@ -78,14 +79,14 @@ function ShareCodeForm() {
                   required: "Description is required",
                 }}
               />
-              <CustomInput
+              {/* <CustomInput
                 id="language"
                 label="Language"
                 type="multiselect"
                 validations={{
                   required: "Language is required",
                 }}
-              />
+              /> */}
             </span>
             <CodeMirror
               height="400px"

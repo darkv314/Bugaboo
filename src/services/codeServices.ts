@@ -1,5 +1,5 @@
 import axios from "@/api/axios";
-import { Code } from "@/models/code";
+import { Code, PostCode } from "@/models/code";
 import { AxiosResponse } from "axios";
 
 
@@ -18,7 +18,7 @@ export const codeService = {
     },
     async postCode(
         token: string,
-        code: Code
+        code: PostCode
     ) {
         const url = `/codes`;
         const response = await axios.post(url, { data: code }, {
