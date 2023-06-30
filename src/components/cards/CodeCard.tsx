@@ -6,11 +6,11 @@ import codeImage from "@/assets/images/cuteBoo3.jpg";
 export const CodeCard = () => {
   return (
     <div className="w-full flex flex-col gap-4">
-      <Image
+      {/* <Image
         src={codeImage}
         alt="Hero Image"
         className="object-cover object-center w-full h-48 rounded-lg"
-      />
+      /> */}
       <h1 className="text-start text-lg sm:text-2xl font-bold font-cabin">
         Code 1
       </h1>

@@ -8,25 +8,32 @@ import { ArrowLeftCircle, ArrowRightCircle } from "iconoir-react";
 import React, { useEffect } from "react";
 import { codeService } from "@/services/codeServices";
 import useAuth from "@/hooks/useAuth";
+import { Code } from "@/models/code";
 
 function page() {
-  const { auth, setAuth } = useAuth();
-  const codes = Array.from({ length: 20 }, (_, i) => i);
-  const [showCodes, setShowCodes] = React.useState<number[]>(
-    codes.slice(0, 10)
-  );
-  const [currentPage, setCurrentPage] = React.useState<number>(1);
   const itemsPerPage = 10;
 
+  const { auth, setAuth } = useAuth();
+  const [codes, setCodes] = React.useState<Code[]>([]); 
+  const [showCodes, setShowCodes] = React.useState<Code[]>(
+    codes.slice(0, itemsPerPage)
+  );
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
+
   const handlePageChange = (page: number) => {
-    setShowCodes(codes.slice((page - 1) * 10, page * 10));
+    setShowCodes(codes.slice((page - 1) * itemsPerPage, page * itemsPerPage));
   };
 
   useEffect(() => {
-    if (auth.token) {
-      codeService.getCodes(auth.token).then((res) => console.log(res));
-    }
+    // if (auth.token) {
+      codeService.getCodes(auth.token).then((res) => setCodes(res.data));
+    // }
   }, []);
+
+  useEffect(() => {
+    setShowCodes(codes.slice(0, itemsPerPage));
+    console.log(codes);
+  }, [codes]);
 
   return (
     <main className="min-h-screen bg-white">

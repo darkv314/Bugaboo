@@ -1,12 +1,7 @@
 import axios from "@/api/axios";
+import { Code } from "@/models/code";
 import { AxiosResponse } from "axios";
 
-type Code = {
-    code: string;
-    language: string;
-    description: string;
-    title: string;
-};
 
 
 export const codeService = {
