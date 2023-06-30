@@ -4,6 +4,7 @@ export type Code = {
     language: string;
     description: string;
     title: string;
+    createdAt: string;
 };
 
 export type CodeGet = {

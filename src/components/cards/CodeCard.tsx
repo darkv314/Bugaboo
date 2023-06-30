@@ -10,6 +10,7 @@ interface CodeCardProps {
 }
 
 export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
+  const pubDate = new Date(code.createdAt);
   return (
     <div className="w-full flex flex-col gap-4">
       {/* <Image
@@ -34,7 +35,7 @@ export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
 
         <span className="text-start text-sm font-cabin">PerryTech</span>
         <time className="hidden sm:block text-start text-sm font-cabin">
-          September 1, 2022
+          {pubDate.toLocaleString()}
         </time>
         <div>
           <CustomButton theme="primary">Comment</CustomButton>
