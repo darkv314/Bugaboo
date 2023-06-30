@@ -56,7 +56,7 @@ export const codeService = {
         return response.data;
     },
     async getCode(token: string, id: number) {
-        const url = `/codes/${id}`;
+        const url = `/codes/${id}?populate[comments][populate][0]=users_permissions_user&&populate[users_permissions_user][populate][0]=*`;
         const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",

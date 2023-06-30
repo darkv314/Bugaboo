@@ -1,3 +1,4 @@
+import { CommentGetI } from "./comment";
 import { UserI } from "./user";
 
 export type Code = {
@@ -8,6 +9,7 @@ export type Code = {
     title: string;
     createdAt: string;
     users_permissions_user: { data: { attributes: UserI } }
+    comments: { data: CommentGetI[] }
 };
 
 export type CodeGet = {

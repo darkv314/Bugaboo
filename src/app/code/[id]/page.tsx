@@ -17,6 +17,8 @@ import CommentCodeForm from "./CommentCodeForm";
 import Link from "next/link";
 import ImageButton from "@/components/interactive/ImageButton";
 import { SquareCursor, User } from "iconoir-react";
+import { Comment } from "./Comment";
+import { stringToDate } from "@/app/utils/stringTodate";
 
 type CommentLine = {
   from: number;
@@ -112,6 +114,32 @@ export default function Page() {
         value={code?.code}
         placeholder={"// Enter your code here"}
       />
+
+      <div className="flex flex-row gap-4 my-2 items-center justify-around sm:justify-between">
+        <div className="flex flex-row gap-4 items-center">
+          <User />
+          <span className="text-start text-sm font-cabin">
+            {code?.users_permissions_user.data.attributes.username}
+          </span>
+        </div>
+        <time className="hidden sm:block text-start text-sm font-cabin">
+          {code && stringToDate(code.createdAt).toLocaleString()}
+        </time>
+      </div>
+
+      {/* Comentarios */}
+      <div className="flex flex-col gap-5">
+        <Badge theme="secondary" id="comments">
+          COMMENTS
+        </Badge>
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 items-center justify-around sm:justify-between">
+            {code?.comments.data.map((comment, index) => (
+              <Comment comment={comment.attributes} key={index} />
+            ))}
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
