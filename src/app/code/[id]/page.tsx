@@ -9,26 +9,72 @@ import { LineModel } from "@/models/@codemirror/LineModel";
 import { codeService } from "@/services/codeServices";
 import useAuth from "@/hooks/useAuth";
 import { Code } from "@/models/code";
+import Modal from "@/components/interactive/Modal";
+import { set } from "react-hook-form";
+import { commentService } from "@/services/commentServices";
+import CustomButton from "@/components/interactive/CustomButton";
 
 export default function Page() {
   const params = useParams();
   const { id } = params;
   const { auth, setAuth } = useAuth();
   const [code, setCode] = useState<Code>();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [commentLine, setCommentLine] = useState("");
 
   const handleComment = (line: LineModel) => {
     console.log(line);
+    setCommentLine(line.text);
+    setModalOpen(true);
   };
 
   useEffect(() => {
     codeService.getCode(auth.token, Number(id)).then((res) => {
       setCode(res.data.attributes);
-      console.log(res);
     });
   }, []);
 
   return (
     <main className="min-h-screen bg-white px-4 lg:px-72 py-8 flex flex-col gap-4">
+      <Modal
+        setOpen={setModalOpen}
+        isOpen={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+      >
+        <div className="flex flex-col gap-4">
+          <Badge theme="secondary" id="comment">
+            COMMENT
+          </Badge>
+          <p className="text-lg">{commentLine}</p>
+          {/* post comment */}
+          <div className="flex gap-4">
+            <CustomButton
+              onClick={() => {
+                setModalOpen(false);
+              }}
+            >
+              Cancel
+            </CustomButton>
+            <CustomButton
+              theme="secondary"
+              onClick={() => {
+                commentService.postComment(auth.token, {
+                  message: "test",
+                  upvotes: 0,
+                  downvotes: 0,
+                  code: Number(id),
+                  users_permissions_user: Number(auth.userId),
+                });
+                setModalOpen(false);
+              }}
+            >
+              Post
+            </CustomButton>
+          </div>
+        </div>
+      </Modal>
       <Badge theme="secondary" id="codes">
         CODES
       </Badge>

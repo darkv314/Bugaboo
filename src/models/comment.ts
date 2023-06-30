@@ -2,6 +2,6 @@ export interface CommentI {
     message: string
     upvotes: number
     downvotes: number
-    code: string
+    code: number
     users_permissions_user: number
 }

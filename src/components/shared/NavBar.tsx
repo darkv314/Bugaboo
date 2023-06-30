@@ -19,12 +19,12 @@ export default function Navbar() {
         <Links linksList={links} isRow />
       </div>
       <div className="flex sm:flex-row flex-col gap-5 items-center">
-        <Link href={isAuth ? "share-code" : "login"}>
+        <Link href={isAuth ? "/share-code" : "/login"}>
           <CustomButton theme={"secondary"}>
             {isAuth ? "Share Code" : "Login"}
           </CustomButton>
         </Link>
-        <Link href="sign-up">
+        <Link href="/sign-up">
           <CustomButton theme="imageButton">
             <ImageButton icon={isAuth ? <User /> : <SquareCursor />}>
               <span className="whitespace-nowrap">
