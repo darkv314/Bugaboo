@@ -21,3 +21,17 @@ export const shareCode = (
     });
     return response;
 };
+
+export const codeService = {
+    async getCodes(token: string) {
+        const url = `/codes`;
+        const response = await axios.get(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+        });
+        return response.data;
+    },
+};     

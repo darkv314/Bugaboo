@@ -5,9 +5,12 @@ import { Hero } from "./Hero";
 import { CodeCard } from "@/components/cards/CodeCard";
 import { Pagination } from "nextjs-pagination";
 import { ArrowLeftCircle, ArrowRightCircle } from "iconoir-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { codeService } from "@/services/codeServices";
+import useAuth from "@/hooks/useAuth";
 
 function page() {
+  const { auth, setAuth } = useAuth();
   const codes = Array.from({ length: 20 }, (_, i) => i);
   const [showCodes, setShowCodes] = React.useState<number[]>(
     codes.slice(0, 10)
@@ -18,6 +21,12 @@ function page() {
   const handlePageChange = (page: number) => {
     setShowCodes(codes.slice((page - 1) * 10, page * 10));
   };
+
+  useEffect(() => {
+    if (auth.token) {
+      codeService.getCodes(auth.token).then((res) => console.log(res));
+    }
+  }, []);
 
   return (
     <main className="min-h-screen bg-white">
