@@ -8,19 +8,6 @@ type Code = {
     title: string;
 };
 
-export const shareCode = (
-    token: string,
-    code: Code
-): Promise<AxiosResponse> => {
-    const response = axios.post("/auth/local", JSON.stringify(code), {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-    });
-    return response;
-};
 
 export const codeService = {
     async getCodes(token: string) {
@@ -34,4 +21,18 @@ export const codeService = {
         });
         return response.data;
     },
+    async postCode(
+        token: string,
+        code: Code
+    ) {
+        const url = `/codes`;
+        const response = await axios.post(url, { data: code }, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+        });
+        return response.data;
+    }
 };     
