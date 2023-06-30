@@ -49,7 +49,7 @@ function page() {
         </div>
         <div className="grid auto-rows-auto grid-cols-auto-fill-20 sm:gap-20">
           {showCodes.map((code, index) => (
-            <CodeCard code={code.attributes} idUser={code.id} key={code.id} />
+            <CodeCard code={code.attributes} idUser={code.id} key={index} />
           ))}
         </div>
       </div>

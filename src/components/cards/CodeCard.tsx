@@ -3,6 +3,7 @@ import CustomButton from "../interactive/CustomButton";
 import Image from "next/image";
 import codeImage from "@/assets/images/cuteBoo3.jpg";
 import { Code } from "@/models/code";
+import Link from "next/link";
 
 interface CodeCardProps {
   code: Code;
@@ -38,7 +39,9 @@ export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
           {pubDate.toLocaleString()}
         </time>
         <div>
-          <CustomButton theme="primary">Comment</CustomButton>
+          <Link href={"code/" + idUser}>
+            <CustomButton theme="primary">Comment</CustomButton>
+          </Link>
         </div>
       </div>
       <hr className="border-px border-secondaryDark"></hr>

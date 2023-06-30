@@ -18,6 +18,7 @@ type ShareCodeFormInputs = {
   language: string;
   code: string;
   users_permissions_user: number;
+  createdAt: string;
 };
 
 function ShareCodeForm() {
