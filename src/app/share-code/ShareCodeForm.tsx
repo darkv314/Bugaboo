@@ -12,13 +12,14 @@ import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 import { javascript } from "@codemirror/lang-javascript";
 import { UserI } from "@/models/user";
+import UploadFileToString from "./UploadFile";
 
 type ShareCodeFormInputs = {
   title: string;
   description: string;
   language: string;
   code: string;
-  users_permissions_user: number
+  users_permissions_user: number;
   createdAt: string;
 };
 
@@ -50,6 +51,12 @@ function ShareCodeForm() {
     //uncomment when code is ready
     shareCodeMutation.mutate(data);
   }
+
+  const [fileString, setFileString] = useState<string>("");
+  const handleFileStringChange = (newFileString: string) => {
+    setFileString(newFileString);
+    setCode(newFileString);
+  };
 
   return (
     <>
@@ -88,9 +95,12 @@ function ShareCodeForm() {
                 }}
               /> */}
             </span>
+            <h1>Upload File</h1>
+            <UploadFileToString onChange={handleFileStringChange} />
             <CodeMirror
               height="400px"
               theme={"dark"}
+              value={code}
               onChange={(value) => {
                 setCode(value);
               }}
