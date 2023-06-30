@@ -1,5 +1,5 @@
 import axios from "@/api/axios";
-import { Code } from "@/models/code";
+import { Code, PostCode } from "@/models/code";
 import { AxiosResponse } from "axios";
 
 export const codeService = {

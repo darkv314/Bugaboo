@@ -29,7 +29,6 @@ const buttonConfig = {
     borderHover: "hover:border-2 hover:border-white",
     border: "border-2 border-dark",
     width: "w-full min-w-[7em]",
-
   },
 };
 
@@ -37,14 +36,21 @@ type ButtonProps = {
   onClick?: () => void;
   theme?: keyof typeof buttonConfig;
   children: ReactNode;
+  type?: "button" | "submit" | "reset" | undefined;
 };
 
-function CustomButton({ onClick, theme = "primary", children }: ButtonProps) {
+function CustomButton({
+  onClick,
+  theme = "primary",
+  children,
+  type = "submit",
+}: ButtonProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.985 }}
       onClick={onClick}
+      type={type}
       className={`${buttonConfig[theme]?.bgColor} 
       ${buttonConfig[theme]?.textColor} ${buttonConfig[theme]?.bgColorHover} 
       ${buttonConfig[theme]?.textColorHover} ${buttonConfig[theme]?.borderHover} 

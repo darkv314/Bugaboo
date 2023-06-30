@@ -11,6 +11,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 import { javascript } from "@codemirror/lang-javascript";
+import { UserI } from "@/models/user";
+import UploadFileToString from "./UploadFile";
 
 type ShareCodeFormInputs = {
   title: string;
@@ -50,6 +52,12 @@ function ShareCodeForm() {
     shareCodeMutation.mutate(data);
   }
 
+  const [fileString, setFileString] = useState<string>("");
+  const handleFileStringChange = (newFileString: string) => {
+    setFileString(newFileString);
+    setCode(newFileString);
+  };
+
   return (
     <>
       <div className="relative flex flex-col rounded-2xl items-center bg-white/80 gap-2">
@@ -78,18 +86,21 @@ function ShareCodeForm() {
                   required: "Description is required",
                 }}
               />
-              <CustomInput
+              {/* <CustomInput
                 id="language"
                 label="Language"
                 type="multiselect"
                 validations={{
                   required: "Language is required",
                 }}
-              />
+              /> */}
             </span>
+            <h1>Upload File</h1>
+            <UploadFileToString onChange={handleFileStringChange} />
             <CodeMirror
               height="400px"
               theme={"dark"}
+              value={code}
               onChange={(value) => {
                 setCode(value);
               }}
