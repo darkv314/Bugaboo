@@ -20,13 +20,13 @@ export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
           className="hidden sm:block object-cover object-center w-16 h-16 rounded-full"
         />
         <span className="text-start text-sm font-cabin">
-          {comment.users_permissions_user.data.attributes.username}
+          {comment.users_permissions_user?.data.attributes.username}
         </span>
 
         <div className="hidden sm:block w-px h-6 bg-secondaryDark"></div>
 
         <time className="hidden sm:block text-start text-sm font-cabin">
-          {stringToDate(comment.createdAt).toLocaleString()}
+          {stringToDate(comment.createdAt || "").toLocaleString()}
         </time>
         <div className="flex gap-1">
           <span className="text-start text-sm font-cabin text-red-400">
