@@ -13,4 +13,5 @@ export interface CommentI {
 
 export type CommentGetI = {
     attributes: CommentI;
+    id: number
 }

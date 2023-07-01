@@ -7,9 +7,10 @@ import { stringToDate } from "@/app/utils/stringTodate";
 
 interface CommentProps {
   comment: CommentI;
+  idComment: number;
 }
 
-export const Comment: React.FC<CommentProps> = ({ comment }) => {
+export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
   return (
     <div className="flex flex-col gap-3 w-full">
       <article className="flex flex-row sm:gap-4 items-center justify-around sm:justify-between">

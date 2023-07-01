@@ -135,7 +135,11 @@ export default function Page() {
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4 items-center justify-around sm:justify-between">
             {code?.comments.data.map((comment, index) => (
-              <Comment comment={comment.attributes} key={index} />
+              <Comment
+                comment={comment.attributes}
+                idComment={comment.id}
+                key={comment.id}
+              />
             ))}
           </div>
         </div>
