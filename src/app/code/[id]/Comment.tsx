@@ -4,6 +4,10 @@ import Image from "next/image";
 import { ArrowDownCircle, ArrowUpCircle, Upload } from "iconoir-react";
 import { CommentI } from "@/models/comment";
 import { stringToDate } from "@/app/utils/stringTodate";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { commentService } from "@/services/commentServices";
+import useAuth from "@/hooks/useAuth";
 
 interface CommentProps {
   comment: CommentI;
@@ -11,6 +15,32 @@ interface CommentProps {
 }
 
 export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
+  const { auth, setAuth } = useAuth();
+  const commentMutation = useMutation({
+    mutationFn: (data: CommentI) => {
+      return commentService.putComment(auth.token, data, idComment);
+    },
+    onSuccess: (response: AxiosResponse) => {
+      console.log(response);
+    },
+    onError: (error: any) => {
+      console.log(error);
+    },
+  });
+
+  const handleUpvote = () => {
+    commentMutation.mutate({
+      ...comment,
+      upvotes: comment.upvotes + 1,
+    });
+  };
+
+  const handleDownvote = () => {
+    commentMutation.mutate({
+      ...comment,
+      downvotes: comment.downvotes + 1,
+    });
+  };
   return (
     <div className="flex flex-col gap-3 w-full">
       <article className="flex flex-row sm:gap-4 items-center justify-around sm:justify-between">
@@ -32,13 +62,19 @@ export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
           <span className="text-start text-sm font-cabin text-red-400">
             {comment.downvotes}
           </span>
-          <ArrowDownCircle className="hover:text-red-800" />
+          <ArrowDownCircle
+            onClick={handleDownvote}
+            className="hover:text-red-800"
+          />
         </div>
         <div className="flex gap-1">
           <span className="text-start text-sm font-cabin text-green-800">
             {comment.upvotes}
           </span>
-          <ArrowUpCircle className="hover:text-secondary" />
+          <ArrowUpCircle
+            onClick={handleUpvote}
+            className="hover:text-secondary"
+          />
         </div>
       </article>
       <hr className="border-px border-secondaryDark"></hr>
