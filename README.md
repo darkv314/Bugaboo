@@ -6,6 +6,9 @@ Bugaboo is a web application that enables developers to share their code snippet
 
 https://github.com/darkv314/Bugaboo/assets/59368787/3a511735-eff8-4d07-81af-cd3bbe5e2813
 
+# Aplicacion deployada
+
+https://bugaboo-kohl.vercel.app
 
 ## Features
 
