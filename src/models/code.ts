@@ -4,7 +4,7 @@ import { UserI } from "./user";
 export type Code = {
     id?: number;
     code: string;
-    language: string;
+    language?: string;
     description: string;
     title: string;
     createdAt: string;
