@@ -11,6 +11,7 @@ import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type ProfileFormInputs = {
     email: string;
@@ -38,11 +39,17 @@ function ProfileForm() {
 
     const profileMutation = useMutation({
         mutationFn: (data: ProfileFormInputs) => {
-            return userService.updateUser(
+            const updateUser = userService.updateUser(
                 data,
                 Number(auth.userId),
                 auth.token
             );
+            toast.promise(updateUser, {
+                loading: "Updating profile...",
+                success: "Profile updated successfully",
+                error: "Error updating profile",
+            });
+            return updateUser;
         },
         onSuccess: (response) => {
             console.log(response);
