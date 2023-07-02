@@ -24,6 +24,8 @@ import {
 } from "iconoir-react";
 import { Comment } from "./Comment";
 import { stringToDate } from "@/app/utils/stringTodate";
+import { useQuery } from "@tanstack/react-query";
+import { Loader } from "@/app/loader/Loader";
 
 type CommentLine = {
   from: number;
@@ -51,13 +53,11 @@ export default function Page() {
     setCommentLine(line);
     setModalOpen(true);
   };
-
-  useEffect(() => {
-    codeService.getCode(auth.token, Number(id)).then((res) => {
-      const code: Code = res.data.attributes;
-      setCode(code);
-    });
-  }, [modalOpen]);
+  const { data, isSuccess, isFetching, isLoading, isError } = useQuery({
+    queryKey: ["code"],
+    queryFn: () => codeService.getCode(auth.token, Number(id)),
+    keepPreviousData: true,
+  });
 
   const handleUpvote = () => {
     codeService.putCode(
@@ -134,69 +134,76 @@ export default function Page() {
       <Badge theme="secondary" id="codes">
         CODES
       </Badge>
-      <h1 className="text-4xl font-bold font-cabin">{code?.title}</h1>
-      <p className="text-lg">{code?.description}</p>
-      {/* *TODO  language */}
-      <CodeMirror
-        height="400px"
-        theme={"dark"}
-        extensions={[
-          javascript(),
-          linesAddPlusGutter(handleComment, {
-            backgroundColor: "#3E404B",
-          }),
-        ]}
-        editable={false}
-        value={code?.code}
-        placeholder={"// Enter your code here"}
-      />
+      {isSuccess && (
+        <>
+          <h1 className="text-4xl font-bold font-cabin">{code?.title}</h1>
+          <p className="text-lg">{code?.description}</p>
+          <CodeMirror
+            height="400px"
+            theme={"dark"}
+            extensions={[
+              javascript(),
+              linesAddPlusGutter(handleComment, {
+                backgroundColor: "#3E404B",
+              }),
+            ]}
+            editable={false}
+            value={data.data.attributes.code}
+            placeholder={"// Enter your code here"}
+          />
 
-      <div className="flex flex-row gap-4 my-2 items-center justify-around sm:justify-between">
-        <div className="flex flex-row gap-4 items-center">
-          <User />
-          <span className="text-start text-sm font-cabin">
-            {code?.users_permissions_user.data.attributes.username}
-          </span>
-        </div>
-        <time className="hidden sm:block text-start text-sm font-cabin">
-          {code && stringToDate(code.createdAt).toLocaleString()}
-        </time>
-        {/* upvotes and downvotes */}
-        <div className="flex flex-row gap-4 items-center">
-          <span className="text-start text-sm font-cabin flex gap-1">
-            {code?.downvotes.data.length}
-            <ArrowDownCircle
-              onClick={handleDownvote}
-              className="hover:text-red-800"
-            />
-          </span>
-          <span className="text-start text-sm font-cabin flex gap-1">
-            {code?.upvotes.data.length}
-            <ArrowUpCircle
-              onClick={handleUpvote}
-              className="hover:text-secondary"
-            />
-          </span>
-        </div>
-      </div>
-
-      {/* Comentarios */}
-      <div className="flex flex-col gap-5">
-        <Badge theme="secondary" id="comments">
-          COMMENTS
-        </Badge>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4 items-center justify-around sm:justify-between">
-            {code?.comments?.data.map((comment, index) => (
-              <Comment
-                comment={comment.attributes}
-                idComment={comment.id}
-                key={comment.id}
-              />
-            ))}
+          <div className="flex flex-row gap-4 my-2 items-center justify-around sm:justify-between">
+            <div className="flex flex-row gap-4 items-center">
+              <User />
+              <span className="text-start text-sm font-cabin">
+                {
+                  data.data.attributes?.users_permissions_user.data.attributes
+                    .username
+                }
+              </span>
+            </div>
+            <time className="hidden sm:block text-start text-sm font-cabin">
+              {code &&
+                stringToDate(data.data.attributes.createdAt).toLocaleString()}
+            </time>
+            {/* upvotes and downvotes */}
+            <div className="flex flex-row gap-4 items-center">
+              <span className="text-start text-sm font-cabin flex gap-1">
+                {data.data.attributes?.downvotes.data.length}
+                <ArrowDownCircle
+                  onClick={handleDownvote}
+                  className="hover:text-red-800"
+                />
+              </span>
+              <span className="text-start text-sm font-cabin flex gap-1">
+                {data.data.attributes?.upvotes.data.length}
+                <ArrowUpCircle
+                  onClick={handleUpvote}
+                  className="hover:text-secondary"
+                />
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
+
+          <div className="flex flex-col gap-5">
+            <Badge theme="secondary" id="comments">
+              COMMENTS
+            </Badge>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 items-center justify-around sm:justify-between">
+                {data.data.attributes?.comments?.data.map((comment, index) => (
+                  <Comment
+                    comment={comment.attributes}
+                    idComment={comment.id}
+                    key={comment.id}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {(isLoading || isFetching) && <Loader />}
     </main>
   );
 }

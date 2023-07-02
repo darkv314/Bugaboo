@@ -60,7 +60,7 @@ export const codeService = {
         });
         return response.data;
     },
-    async getCode(token: string, id: number) {
+    async getCode(token: string, id: number): Promise<StrapiResponse<CodeGet>> {
         const url = `/codes/${id}`;
         const response = await axios.get(url, {
             headers: {
