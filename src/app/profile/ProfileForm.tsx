@@ -9,6 +9,7 @@ import { userService } from "@/services/userServices";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 type ProfileFormInputs = {
@@ -20,9 +21,16 @@ type ProfileFormInputs = {
 };
 
 function ProfileForm() {
-    const methods = useForm<ProfileFormInputs>();
+    const methods = useForm<ProfileFormInputs>({
+        defaultValues: {
+            password: "",
+            confirmPassword: "",
+            currentPassword: "",
+        },
+    });
     const { auth, setAuth } = useAuth();
     const router = useRouter();
+    const [disabled, setDisabled] = useState(true);
 
     function onSubmit(data: ProfileFormInputs) {
         profileMutation.mutate(data);
@@ -67,6 +75,7 @@ function ProfileForm() {
                             id="email"
                             label="Email"
                             type="text"
+                            disabled={disabled}
                             value={auth.email}
                             validations={{
                                 required: "Email is required",
@@ -81,8 +90,9 @@ function ProfileForm() {
                             label="Username"
                             type="text"
                             value={auth.username}
+                            disabled
                             validations={{
-                                required: "Username is required",
+                                // required: "Username is required",
                                 minLength: {
                                     value: 4,
                                     message:
@@ -93,6 +103,7 @@ function ProfileForm() {
                         <CustomInput
                             id="currentPassword"
                             label="Current password"
+                            disabled={disabled}
                             type="password"
                             validations={
                                 {
@@ -103,6 +114,7 @@ function ProfileForm() {
                         <CustomInput
                             id="password"
                             label="New password"
+                            disabled={disabled}
                             type="password"
                             validations={{
                                 // required: "Password is required",
@@ -116,6 +128,7 @@ function ProfileForm() {
                         <CustomInput
                             id="confirmPassword"
                             label="Confirm Password"
+                            disabled={disabled}
                             type="password"
                             validations={
                                 {
@@ -124,14 +137,26 @@ function ProfileForm() {
                             }
                         />
                     </span>
-                    <CustomButton theme="secondary">
-                        <LoadingLabel
-                            message="Update Profile"
-                            state={profileMutation.isLoading}
-                        />
-                    </CustomButton>
+                    {!disabled && (
+                        <CustomButton theme="secondary">
+                            <LoadingLabel
+                                message="Save Changes"
+                                state={profileMutation.isLoading}
+                            />
+                        </CustomButton>
+                    )}
                 </form>
             </FormProvider>
+            {disabled && (
+                <span className="w-full mt-2">
+                    <CustomButton
+                        type="button"
+                        onClick={() => setDisabled(false)}
+                    >
+                        Update Profile
+                    </CustomButton>
+                </span>
+            )}
             <span className="absolute -bottom-8 -right-8 w-48 h-48 bg-secondary rounded-2xl -z-10 login-card hidden xs:block"></span>
         </div>
     );

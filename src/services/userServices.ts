@@ -34,7 +34,11 @@ export const userService = {
     },
 
     async updateUser(data: updateUser, id: number, token: string) {
-        if (data.password !== "") {
+        if (
+            data.password !== "" &&
+            data.confirmPassword !== "" &&
+            data.currentPassword !== ""
+        ) {
             const passwordData: updatePassword = {
                 password: data.password as string,
                 currentPassword: data.currentPassword as string,
