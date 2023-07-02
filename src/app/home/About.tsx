@@ -18,8 +18,8 @@ export const About = () => {
           from each other
         </p>
         <p className="text-base text-secondaryDark">
-          Get help from Alex Moore, a professional business coach with advanced
-          experience on growth and business scaling.
+          Get help from other developers, and help others by sharing your
+          knowledge
         </p>
         <hr className="border-px border-secondaryDark"></hr>
         <div className="flex sm:flex-row flex-col justify-between gap-4 sm:gap-10">

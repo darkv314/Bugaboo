@@ -17,10 +17,6 @@ export const navBarNoAuth: ILink[] = [
         name: 'Steps',
         path: '/#steps',
     },
-    {
-        name: 'Testimonials',
-        path: '/#testimonials',
-    },
 ];
 
 
