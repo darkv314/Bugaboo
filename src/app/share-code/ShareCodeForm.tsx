@@ -13,6 +13,7 @@ import { useState } from "react";
 import { javascript } from "@codemirror/lang-javascript";
 import { UserI } from "@/models/user";
 import UploadFileToString from "./UploadFile";
+import { toast } from "sonner";
 
 type ShareCodeFormInputs = {
   title: string;
@@ -31,24 +32,23 @@ function ShareCodeForm() {
 
   const shareCodeMutation = useMutation({
     mutationFn: (data: ShareCodeFormInputs) => {
-      return codeService.postCode(auth.token, data);
+      const postCode = codeService.postCode(auth.token, data);
+      toast.promise(postCode, {
+        loading: "Sharing Code...",
+        success: "Code Shared successfully",
+        error: "Error sharing code",
+      });
+
+      return postCode;
     },
     onSuccess: (response: AxiosResponse) => {
-      console.log(response);
-      router.push("/shared-codes");
-    },
-    onError: (error: any) => {
-      console.log(error);
+      router.push(`/code/${response.data.id}`);
     },
   });
 
   function onSubmit(data: ShareCodeFormInputs) {
     data.code = code;
     data.users_permissions_user = Number(auth.userId);
-    //
-    console.log(data);
-
-    //uncomment when code is ready
     shareCodeMutation.mutate(data);
   }
 
