@@ -9,6 +9,9 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
+import UseAnimations from "react-useanimations";
+import loading from "react-useanimations/lib/loading";
+import { toast } from "sonner";
 
 type SignUpFormInputs = {
     email: string;
@@ -28,13 +31,24 @@ function SignUpForm() {
 
     const signUpMutation = useMutation({
         mutationFn: (data: SignUpFormInputs) => {
-            return registerUser(data.username, data.email, data.password);
+            const register = registerUser(
+                data.username,
+                data.email,
+                data.password
+            );
+            toast.promise(register, {
+                loading: "Signing up...",
+                success: "Signed up!",
+                error: "Error signing up",
+            });
+            return register;
         },
         onSuccess: (response: AxiosResponse) => {
             console.log(response);
             setAuth({
                 userId: response.data.user.id,
                 token: response.data.jwt,
+                username: response.data.user.username,
             });
             router.push("/shared-codes");
         },
@@ -100,7 +114,10 @@ function SignUpForm() {
                             }}
                         />
                     </span>
-                    <CustomButton theme="secondary">
+                    <CustomButton
+                        disable={signUpMutation.isLoading}
+                        theme="secondary"
+                    >
                         <LoadingLabel
                             message="Sign Up"
                             state={signUpMutation.isLoading}

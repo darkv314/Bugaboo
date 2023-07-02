@@ -5,8 +5,6 @@ import { Links } from "./Links";
 import { navBarAuth, navBarNoAuth } from "@/data/data";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
-import { use, useEffect } from "react";
-import { userService } from "@/services/userServices";
 
 export default function Navbar() {
     const { auth } = useAuth();

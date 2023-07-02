@@ -4,6 +4,7 @@ import Image from "next/image";
 import codeImage from "@/assets/images/cuteBoo3.jpg";
 import { Code } from "@/models/code";
 import Link from "next/link";
+import useAuth from "@/hooks/useAuth";
 
 interface CodeCardProps {
   code: Code;
@@ -11,6 +12,7 @@ interface CodeCardProps {
 }
 
 export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
+  const { auth } = useAuth();
   const pubDate = new Date(code.createdAt);
   return (
     <div className="w-full flex flex-col gap-4">
@@ -35,7 +37,7 @@ export const CodeCard: React.FC<CodeCardProps> = ({ code, idUser }) => {
         <div className="hidden sm:block w-px h-6 bg-secondaryDark"></div>
 
         <span className="text-start text-sm font-cabin">
-          {code.users_permissions_user.data.attributes.username}
+          {code?.users_permissions_user?.data?.attributes?.username ?? auth.username}
         </span>
         <time className="hidden sm:block text-start text-sm font-cabin">
           {pubDate.toLocaleString()}

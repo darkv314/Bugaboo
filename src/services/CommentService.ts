@@ -1,26 +1,21 @@
-import { StrapiResponse } from './../models/strapiModel';
+import { CommentI } from './../models/comment';
 import axios from "@/api/axios";
-import { Code, CodeGet, PostCode } from "@/models/code";
+import { AxiosResponse } from "axios";
 
-export const codeService = {
-    async getCodes(token: string, currentPage: number, totaItems: number): Promise<StrapiResponse<CodeGet[]>> {
-        const url = `/codes`;
+export const commentService = {
+    async getComments(token: string) {
+        const url = `/comments`;
         const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             withCredentials: true,
-            params: {
-                'populate': '*',
-                'pagination[page]': currentPage,
-                'pagination[pageSize]': totaItems,
-            }
         });
         return response.data;
     },
-    async postCode(token: string, code: PostCode) {
-        const url = `/codes`;
+    async postComments(token: string, code: CommentI) {
+        const url = `/comments`;
         const response = await axios.post(
             url,
             { data: code },
@@ -34,8 +29,8 @@ export const codeService = {
         );
         return response.data;
     },
-    async putCode(token: string, code: PostCode, idUser: number): Promise<StrapiResponse<CodeGet>> {
-        const url = `/codes/${idUser}`;
+    async putComments(token: string, code: CommentI, id: number) {
+        const url = `/comments/${id}`;
         const response = await axios.put(
             url,
             { data: code },
@@ -49,8 +44,8 @@ export const codeService = {
         );
         return response.data;
     },
-    async deleteCode(token: string, code: Code) {
-        const url = `/codes/${code.id}`;
+    async deleteComments(token: string, code: CommentI, id: number) {
+        const url = `/comments/${id}`;
         const response = await axios.delete(url, {
             headers: {
                 "Content-Type": "application/json",
@@ -60,22 +55,14 @@ export const codeService = {
         });
         return response.data;
     },
-    async getCode(token: string, id: number): Promise<StrapiResponse<CodeGet>> {
-        const url = `/codes/${id}`;
+    async getComment(token: string, id: number) {
+        const url = `comments/${id}`;
         const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             withCredentials: true,
-            params: {
-                'populate[comments][populate][0]': "users_permissions_user",
-                'populate[users_permissions_user][populate][0]': '*',
-                'populate[downvotes][populate][0]': "downvotes",
-                'populate[upvotes][populate][0]': "upvotes",
-                'populate[comments][populate][1]': "upvotes",
-                'populate[comments][populate][2]': "downvotes",
-            },
         });
         return response.data;
     },
