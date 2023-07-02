@@ -19,12 +19,6 @@ function page() {
     keepPreviousData: true,
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-    }
-  }, [isFetching, isLoading]);
-
   return (
     <main className="min-h-screen bg-white">
       <Hero />
