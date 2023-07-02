@@ -4,7 +4,7 @@ import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
 import LoadingLabel from "@/components/interactive/LoadingLabel";
 import useAuth from "@/hooks/useAuth";
-import { PostCommentI } from "@/models/comment";
+import { CommentGetI, PostCommentI } from "@/models/comment";
 import { StrapiResponse } from "@/models/strapiModel";
 import { commentService } from "@/services/commentServices";
 import { useMutation } from "@tanstack/react-query";
@@ -40,8 +40,8 @@ function CommentCodeForm({
       const postComment = commentService.postComment(auth.token, {
         message: data.message,
         code: Number(id),
-        upvotes: 0,
-        downvotes: 0,
+        upvotes: [],
+        downvotes: [],
         users_permissions_user: Number(auth.userId),
         codeLine,
         numberCodeLine,
@@ -53,7 +53,7 @@ function CommentCodeForm({
       });
       return postComment;
     },
-    onSuccess: (response: StrapiResponse<PostCommentI>) => {
+    onSuccess: (response: StrapiResponse<CommentGetI>) => {
       setModalOpen(false);
       refetch();
     },

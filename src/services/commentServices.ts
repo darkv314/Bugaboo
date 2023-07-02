@@ -1,5 +1,5 @@
 import { StrapiResponse } from './../models/strapiModel';
-import { PostCommentI } from './../models/comment';
+import { CommentGetI, PostCommentI, PutCommentI } from './../models/comment';
 import axios from "@/api/axios";
 import { CommentI } from "@/models/comment";
 
@@ -18,7 +18,7 @@ export const commentService = {
     async postComment(
         token: string,
         comment: PostCommentI
-    ): Promise<StrapiResponse<PostCommentI>> {
+    ): Promise<StrapiResponse<CommentGetI>> {
         const url = `/comments`;
         const response = await axios.post(url, { data: comment }, {
             headers: {
@@ -31,9 +31,9 @@ export const commentService = {
     },
     async putComment(
         token: string,
-        comment: CommentI,
+        comment: PutCommentI,
         id: number
-    ) {
+    ): Promise<StrapiResponse<CommentGetI>> {
         const url = `/comments/${id}`;
         const response = await axios.put(url, { data: comment }, {
             headers: {

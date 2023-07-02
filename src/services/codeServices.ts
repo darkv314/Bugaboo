@@ -73,7 +73,8 @@ export const codeService = {
                 'populate[users_permissions_user][populate][0]': '*',
                 'populate[downvotes][populate][0]': "downvotes",
                 'populate[upvotes][populate][0]': "upvotes",
-
+                'populate[comments][populate][1]': "upvotes",
+                'populate[comments][populate][2]': "downvotes",
             },
         });
         return response.data;

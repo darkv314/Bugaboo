@@ -214,6 +214,8 @@ export default function Page() {
                   <Comment
                     comment={comment.attributes}
                     idComment={comment.id}
+                    refetch={refetch}
+                    setModalOpen={setModalOpen}
                     key={comment.id}
                   />
                 ))}

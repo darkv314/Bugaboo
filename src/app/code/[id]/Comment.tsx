@@ -2,39 +2,70 @@ import React from "react";
 import codeImage from "@/assets/images/cuteBoo3.jpg";
 import Image from "next/image";
 import { ArrowDownCircle, ArrowUpCircle, Upload } from "iconoir-react";
-import { CommentI } from "@/models/comment";
+import {
+  CommentGetI,
+  CommentI,
+  PostCommentI,
+  PutCommentI,
+} from "@/models/comment";
 import { stringToDate } from "@/app/utils/stringTodate";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { commentService } from "@/services/commentServices";
 import useAuth from "@/hooks/useAuth";
+import { StrapiResponse } from "@/models/strapiModel";
+import { toast } from "sonner";
 
 interface CommentProps {
   comment: CommentI;
   idComment: number;
+  refetch: () => void;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
+export const Comment: React.FC<CommentProps> = ({
+  comment,
+  idComment,
+  refetch,
+  setModalOpen,
+}) => {
   const { auth, setAuth } = useAuth();
   const commentMutation = useMutation({
-    mutationFn: (data: CommentI) => {
-      return commentService.putComment(auth.token, data, idComment);
+    mutationFn: (data: PutCommentI) => {
+      const putComment = commentService.putComment(auth.token, data, idComment);
+      toast.promise(putComment, {
+        loading: "Voting comment...",
+        success: "Comment voted!",
+        error: "Error voting comment",
+      });
+      return putComment;
     },
-    onSuccess: (response: AxiosResponse) => {
+    onSuccess: (response: StrapiResponse<CommentGetI>) => {
+      refetch();
     },
   });
 
   const handleUpvote = () => {
+    if (!auth.userId) return setModalOpen(true);
     commentMutation.mutate({
-      ...comment,
-      upvotes: comment.upvotes + 1,
+      upvotes: {
+        connect: [Number(auth.userId)],
+      },
+      downvotes: {
+        disconnect: [Number(auth.userId)],
+      },
     });
   };
 
   const handleDownvote = () => {
+    if (!auth.userId) return setModalOpen(true);
     commentMutation.mutate({
-      ...comment,
-      downvotes: comment.downvotes + 1,
+      downvotes: {
+        connect: [Number(auth.userId)],
+      },
+      upvotes: {
+        disconnect: [Number(auth.userId)],
+      },
     });
   };
   return (
@@ -56,7 +87,7 @@ export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
         </time>
         <div className="flex gap-1">
           <span className="text-start text-sm font-cabin text-red-400">
-            {comment.downvotes}
+            {comment.downvotes?.data.length || 0}
           </span>
           <ArrowDownCircle
             onClick={handleDownvote}
@@ -65,7 +96,7 @@ export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
         </div>
         <div className="flex gap-1">
           <span className="text-start text-sm font-cabin text-green-800">
-            {comment.upvotes}
+            {comment.upvotes?.data.length || 0}
           </span>
           <ArrowUpCircle
             onClick={handleUpvote}
