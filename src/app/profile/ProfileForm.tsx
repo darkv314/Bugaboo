@@ -2,54 +2,49 @@
 import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
 import LoadingLabel from "@/components/interactive/LoadingLabel";
+import { AuthContextType } from "@/context/AuthProvider";
 import { EMAIL_CHECK } from "@/helpers/regex";
 import useAuth from "@/hooks/useAuth";
-import { registerUser } from "@/services/auth";
+import { userService } from "@/services/userServices";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import { FormProvider, useForm } from "react-hook-form";
-import UseAnimations from "react-useanimations";
-import loading from "react-useanimations/lib/loading";
-import { toast } from "sonner";
 
-type SignUpFormInputs = {
+type ProfileFormInputs = {
     email: string;
     username: string;
+    currentPassword: string;
     password: string;
     confirmPassword: string;
 };
 
-function SignUpForm() {
-    const methods = useForm<SignUpFormInputs>();
-    const { setAuth } = useAuth();
+function ProfileForm() {
+    const methods = useForm<ProfileFormInputs>();
+    const { auth, setAuth } = useAuth();
     const router = useRouter();
 
-    function onSubmit(data: SignUpFormInputs) {
-        signUpMutation.mutate(data);
+    function onSubmit(data: ProfileFormInputs) {
+        profileMutation.mutate(data);
     }
 
-    const signUpMutation = useMutation({
-        mutationFn: (data: SignUpFormInputs) => {
-            const register = registerUser(
-                data.username,
-                data.email,
-                data.password
+    const profileMutation = useMutation({
+        mutationFn: (data: ProfileFormInputs) => {
+            return userService.updateUser(
+                data,
+                Number(auth.userId),
+                auth.token
             );
-            toast.promise(register, {
-                loading: "Signing up...",
-                success: "Signed up!",
-                error: "Error signing up",
-            });
-            return register;
         },
-        onSuccess: (response: AxiosResponse) => {
+        onSuccess: (response) => {
             console.log(response);
-            setAuth({
-                userId: response.data.user.id,
-                token: response.data.jwt,
-                username: response.data.user.username,
-                email: response.data.user.email,
+            setAuth((prev: AuthContextType) => {
+                return {
+                    ...prev,
+                    userId: response.id,
+                    email: response.email,
+                    username: response.username,
+                };
             });
             router.push("/shared-codes");
         },
@@ -60,7 +55,7 @@ function SignUpForm() {
     return (
         <div className="relative flex flex-col rounded-2xl items-center bg-white/80 w-5/6 xs:w-7/12 sm:w-1/2 md:w-2/5 lg:w-[32%] m-4 py-12 px-12 gap-2">
             <h1 className="text-3xl text-black font-extrabold font-cabin">
-                Sign Up
+                Profile
             </h1>
             <FormProvider {...methods}>
                 <form
@@ -72,6 +67,7 @@ function SignUpForm() {
                             id="email"
                             label="Email"
                             type="text"
+                            value={auth.email}
                             validations={{
                                 required: "Email is required",
                                 pattern: {
@@ -84,6 +80,7 @@ function SignUpForm() {
                             id="username"
                             label="Username"
                             type="text"
+                            value={auth.username}
                             validations={{
                                 required: "Username is required",
                                 minLength: {
@@ -94,11 +91,21 @@ function SignUpForm() {
                             }}
                         />
                         <CustomInput
+                            id="currentPassword"
+                            label="Current password"
+                            type="password"
+                            validations={
+                                {
+                                    // required: "Password is required",
+                                }
+                            }
+                        />
+                        <CustomInput
                             id="password"
-                            label="Password"
+                            label="New password"
                             type="password"
                             validations={{
-                                required: "Password is required",
+                                // required: "Password is required",
                                 minLength: {
                                     value: 6,
                                     message:
@@ -110,18 +117,17 @@ function SignUpForm() {
                             id="confirmPassword"
                             label="Confirm Password"
                             type="password"
-                            validations={{
-                                required: "Confirm Password is required",
-                            }}
+                            validations={
+                                {
+                                    // required: "Confirm Password is required",
+                                }
+                            }
                         />
                     </span>
-                    <CustomButton
-                        disable={signUpMutation.isLoading}
-                        theme="secondary"
-                    >
+                    <CustomButton theme="secondary">
                         <LoadingLabel
-                            message="Sign Up"
-                            state={signUpMutation.isLoading}
+                            message="Update Profile"
+                            state={profileMutation.isLoading}
                         />
                     </CustomButton>
                 </form>
@@ -131,4 +137,4 @@ function SignUpForm() {
     );
 }
 
-export default SignUpForm;
+export default ProfileForm;

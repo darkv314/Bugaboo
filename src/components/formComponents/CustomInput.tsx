@@ -151,6 +151,7 @@ function TextInput({ id, validations, value, type }: InputProps) {
             type={type}
             {...register(id, validations)}
             defaultValue={value}
+            // value={value}
         />
     );
 }
