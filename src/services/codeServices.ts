@@ -3,7 +3,7 @@ import axios from "@/api/axios";
 import { Code, CodeGet, PostCode } from "@/models/code";
 
 export const codeService = {
-    async getCodes(token: string): Promise<StrapiResponse<CodeGet[]>> {
+    async getCodes(token: string, currentPage: number, totaItems: number): Promise<StrapiResponse<CodeGet[]>> {
         const url = `/codes`;
         const response = await axios.get(url, {
             headers: {
@@ -13,8 +13,8 @@ export const codeService = {
             withCredentials: true,
             params: {
                 'populate': '*',
-                'pagination[page]': 1,
-                'pagination[pageSize]': 10
+                'pagination[page]': currentPage,
+                'pagination[pageSize]': totaItems,
             }
         });
         return response.data;

@@ -23,9 +23,10 @@ function page() {
     setCurrentPage(page);
   };
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ["codes"],
-    queryFn: () => codeService.getCodes(auth.token),
+  const { data, isSuccess, isFetching } = useQuery({
+    queryKey: ["codes", currentPage],
+    queryFn: () => codeService.getCodes(auth.token, currentPage, itemsPerPage),
+    keepPreviousData: true,
   });
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function page() {
       setCodes(data.data);
       setTotalItems(totalCount);
     }
-  }, [isSuccess]);
+  }, [isSuccess, isFetching]);
 
   return (
     <main className="min-h-screen bg-white">
