@@ -8,4 +8,10 @@ export interface StrapiResponse<T> {
             total: number;
         }
     }
+    error: {
+        message: string;
+        status: number;
+        name: string;
+        datils: {}
+    }
 }

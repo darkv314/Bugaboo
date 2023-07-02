@@ -6,3 +6,8 @@ export interface UserI {
     updatedAt: string
     username: string
 }
+
+export interface UserResponseI {
+    jwt: string
+    user: UserI
+}

@@ -1,10 +1,11 @@
 import axios from "@/api/axios";
+import { UserResponseI } from "@/models/user";
 import { AxiosResponse } from "axios";
 
 export const loginUser = (
     identifier: string,
     password: string
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse<UserResponseI>> => {
     const response = axios.post(
         "/auth/local",
         JSON.stringify({
