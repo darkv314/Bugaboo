@@ -1,6 +1,7 @@
 # Bugaboo
 
 Bugaboo is a web application that enables developers to share their code snippets, seek feedback, and collaborate with a vibrant community. This platform aims to foster collaboration, enhance coding skills, and inspire creativity among developers of all levels.
+![image](https://github.com/darkv314/Bugaboo/assets/59368787/8a5610d7-478c-4cd1-a0d2-1d76c1836f86)
 
 ## Features
 
@@ -17,6 +18,12 @@ Bugaboo is a web application that enables developers to share their code snippet
 3. Configure the application by setting up the necessary environment variables.
 4. Start the development server: `npm start`
 5. Access the application locally at `http://localhost:3000`
+
+## Backend
+
+```
+https://github.com/darkv314/Bugaboo-Backend
+```
 
 ## Contributing
 
