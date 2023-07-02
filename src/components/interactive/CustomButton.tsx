@@ -37,6 +37,7 @@ type ButtonProps = {
   theme?: keyof typeof buttonConfig;
   children: ReactNode;
   type?: "button" | "submit" | "reset" | undefined;
+  disable?: boolean;
 };
 
 function CustomButton({
@@ -44,17 +45,25 @@ function CustomButton({
   theme = "primary",
   children,
   type = "submit",
+  disable = false,
 }: ButtonProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.985 }}
+      disabled={disable}
       onClick={onClick}
       type={type}
       className={`${buttonConfig[theme]?.bgColor} 
-      ${buttonConfig[theme]?.textColor} ${buttonConfig[theme]?.bgColorHover} 
-      ${buttonConfig[theme]?.textColorHover} ${buttonConfig[theme]?.borderHover} 
-      ${buttonConfig[theme]?.border} py-2 px-3 rounded-3xl ${buttonConfig[theme]?.width}`}
+      ${buttonConfig[theme]?.textColor} ${
+        !disable && buttonConfig[theme]?.bgColorHover
+      } 
+      ${!disable && buttonConfig[theme]?.textColorHover} ${
+        buttonConfig[theme]?.borderHover
+      } 
+      ${buttonConfig[theme]?.border} py-2 px-3 rounded-3xl ${
+        buttonConfig[theme]?.width
+      }`}
     >
       {children}
     </motion.button>

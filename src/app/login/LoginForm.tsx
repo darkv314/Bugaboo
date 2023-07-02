@@ -31,16 +31,12 @@ function LoginForm() {
       return login;
     },
     onSuccess: (response: AxiosResponse) => {
-      console.log(response);
       setAuth({
         userId: response.data.user.id,
         token: response.data.jwt,
         username: response.data.user.username,
       });
       router.push("/shared-codes");
-    },
-    onError: (error: any) => {
-      console.log(error);
     },
   });
 
@@ -75,7 +71,7 @@ function LoginForm() {
                 }}
               />
             </span>
-            <CustomButton theme="secondary">
+            <CustomButton disable={loginMutation.isLoading} theme="secondary">
               <LoadingLabel message="Login" state={loginMutation.isLoading} />
             </CustomButton>
           </form>
