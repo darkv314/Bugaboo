@@ -16,7 +16,6 @@ type LoginFormInputs = {
 
 function LoginForm() {
     const methods = useForm<LoginFormInputs>();
-    const url = window.location.href;
     const router = useRouter();
     const { setAuth } = useAuth();
 

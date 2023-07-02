@@ -16,7 +16,12 @@ import CustomButton from "@/components/interactive/CustomButton";
 import CommentCodeForm from "./CommentCodeForm";
 import Link from "next/link";
 import ImageButton from "@/components/interactive/ImageButton";
-import { SquareCursor, User } from "iconoir-react";
+import {
+  ArrowDownCircle,
+  ArrowUpCircle,
+  SquareCursor,
+  User,
+} from "iconoir-react";
 import { Comment } from "./Comment";
 import { stringToDate } from "@/app/utils/stringTodate";
 
@@ -49,9 +54,40 @@ export default function Page() {
 
   useEffect(() => {
     codeService.getCode(auth.token, Number(id)).then((res) => {
-      setCode(res.data.attributes);
+      const code: Code = res.data.attributes;
+      setCode(code);
     });
   }, [modalOpen]);
+
+  const handleUpvote = () => {
+    codeService.putCode(
+      auth.token,
+      {
+        upvotes: {
+          connect: [Number(auth.userId)],
+        },
+        downvotes: {
+          disconnect: [Number(auth.userId)],
+        },
+      },
+      Number(auth.userId)
+    );
+  };
+
+  const handleDownvote = () => {
+    codeService.putCode(
+      auth.token,
+      {
+        downvotes: {
+          connect: [Number(auth.userId)],
+        },
+        upvotes: {
+          disconnect: [Number(auth.userId)],
+        },
+      },
+      Number(auth.userId)
+    );
+  };
 
   return (
     <main className="min-h-screen bg-white px-4 lg:px-72 py-8 flex flex-col gap-4">
@@ -125,6 +161,23 @@ export default function Page() {
         <time className="hidden sm:block text-start text-sm font-cabin">
           {code && stringToDate(code.createdAt).toLocaleString()}
         </time>
+        {/* upvotes and downvotes */}
+        <div className="flex flex-row gap-4 items-center">
+          <span className="text-start text-sm font-cabin flex gap-1">
+            {code?.downvotes.data.length}
+            <ArrowDownCircle
+              onClick={handleDownvote}
+              className="hover:text-red-800"
+            />
+          </span>
+          <span className="text-start text-sm font-cabin flex gap-1">
+            {code?.upvotes.data.length}
+            <ArrowUpCircle
+              onClick={handleUpvote}
+              className="hover:text-secondary"
+            />
+          </span>
+        </div>
       </div>
 
       {/* Comentarios */}
@@ -134,7 +187,7 @@ export default function Page() {
         </Badge>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-4 items-center justify-around sm:justify-between">
-            {code?.comments.data.map((comment, index) => (
+            {code?.comments?.data.map((comment, index) => (
               <Comment
                 comment={comment.attributes}
                 idComment={comment.id}
