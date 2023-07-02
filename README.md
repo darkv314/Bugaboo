@@ -7,7 +7,7 @@ Bugaboo is a web application that enables developers to share their code snippet
 - **Code Sharing**: Easily share your code snippets, projects, and challenges with others.
 - **Comments and Feedback**: Receive valuable comments, suggestions, and feedback on your code from the community.
 - **Collaboration**: Connect with like-minded developers, find potential collaborators, and work together on projects.
-- **Search and Discovery**: Discover a wide range of code snippets, explore different programming languages, and learn from diverse coding styles.
+- **Search and Discovery**: Discover a wide range of code snippets, and learn from diverse coding styles.
 - **Secure and Privacy-Focused**: Bugaboo prioritizes the security and privacy of its users, ensuring a safe and trusted environment for code sharing and collaboration.
 
 ## Installation
