@@ -1,16 +1,21 @@
+import { StrapiResponse } from './../models/strapiModel';
 import axios from "@/api/axios";
-import { Code, PostCode } from "@/models/code";
-import { AxiosResponse } from "axios";
+import { Code, CodeGet, PostCode } from "@/models/code";
 
 export const codeService = {
-    async getCodes(token: string) {
-        const url = `/codes?populate=*`;
+    async getCodes(token: string): Promise<StrapiResponse<CodeGet[]>> {
+        const url = `/codes`;
         const response = await axios.get(url, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             withCredentials: true,
+            params: {
+                'populate': '*',
+                'pagination[page]': 1,
+                'pagination[pageSize]': 10
+            }
         });
         return response.data;
     },
