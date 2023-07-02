@@ -1,11 +1,15 @@
-import { navBarNoAuth } from "@/data/data";
+import { navBarAuth, navBarNoAuth } from "@/data/data";
 import { Links } from "./Links";
 import { SocialIcons } from "./SocialIcons";
 import { Title } from "./Title";
 import CustomButton from "../interactive/CustomButton";
 import Link from "next/link";
+import useAuth from "@/hooks/useAuth";
 
 export default function Footer() {
+  const { auth } = useAuth();
+  const isAuth = auth.token && auth.userId ? true : false;
+  const links = isAuth ? navBarAuth : navBarNoAuth;
   return (
     <footer className="bg-dark py-10 lg:px-72 w-full backdrop-blur-md">
       <div className="flex items-center justify-center lg:justify-between gap-3">
@@ -17,7 +21,7 @@ export default function Footer() {
           <div className="hidden lg:block w-px h-64 bg-secondaryDark"></div>
         </div>
         <div className="hidden h-full items-start gap-24 justify-end lg:flex">
-          <Links linksList={navBarNoAuth} isRow={false} />
+          <Links linksList={links} isRow={false} />
           <div className="flex flex-col items-center justify-center gap-4 self-center">
             <CustomButton theme="secondary">Join Us</CustomButton>
           </div>
