@@ -3,6 +3,10 @@
 Bugaboo is a web application that enables developers to share their code snippets, seek feedback, and collaborate with a vibrant community. This platform aims to foster collaboration, enhance coding skills, and inspire creativity among developers of all levels.
 ![image](https://github.com/darkv314/Bugaboo/assets/59368787/8a5610d7-478c-4cd1-a0d2-1d76c1836f86)
 
+
+https://github.com/darkv314/Bugaboo/assets/59368787/3a511735-eff8-4d07-81af-cd3bbe5e2813
+
+
 ## Features
 
 - **Code Sharing**: Easily share your code snippets, projects, and challenges with others.
