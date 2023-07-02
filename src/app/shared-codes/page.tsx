@@ -10,32 +10,22 @@ import { codeService } from "@/services/codeServices";
 import useAuth from "@/hooks/useAuth";
 import { Code, CodeGet } from "@/models/code";
 import { useQuery } from "@tanstack/react-query";
+import { Loader } from "../loader/Loader";
 
 function page() {
   const itemsPerPage = 10;
   const { auth, setAuth } = useAuth();
-  const [codes, setCodes] = React.useState<CodeGet[]>([]);
-
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const [totalItems, setTotalItems] = React.useState<number>(0);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const { data, isSuccess, isFetching } = useQuery({
+  const { data, isSuccess, isFetching, isLoading, isError } = useQuery({
     queryKey: ["codes", currentPage],
     queryFn: () => codeService.getCodes(auth.token, currentPage, itemsPerPage),
     keepPreviousData: true,
   });
-
-  useEffect(() => {
-    if (isSuccess) {
-      const totalCount = data.meta.pagination.total;
-      setCodes(data.data);
-      setTotalItems(totalCount);
-    }
-  }, [isSuccess, isFetching]);
 
   return (
     <main className="min-h-screen bg-white">
@@ -50,21 +40,25 @@ function page() {
           </h1>
         </div>
         <div className="grid auto-rows-auto grid-cols-auto-fill-20 sm:gap-20">
-          {codes.map((code, index) => (
-            <CodeCard code={code.attributes} idUser={code.id} key={index} />
-          ))}
+          {isSuccess &&
+            data.data.map((code, index) => (
+              <CodeCard code={code.attributes} idUser={code.id} key={index} />
+            ))}
         </div>
       </div>
       <div className="py-2 flex flex-col justify-center items-center">
-        <Pagination
-          onPageChange={handlePageChange}
-          totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
-          color="#181818"
-          prevText={<ArrowLeftCircle className="inline-block" />}
-          nextText={<ArrowRightCircle className="inline-block" />}
-        />
+        {isSuccess && (
+          <Pagination
+            onPageChange={handlePageChange}
+            totalItems={data.meta.pagination.total}
+            itemsPerPage={itemsPerPage}
+            color="#181818"
+            prevText={<ArrowLeftCircle className="inline-block" />}
+            nextText={<ArrowRightCircle className="inline-block" />}
+          />
+        )}
       </div>
+      {(isLoading || isFetching) && <Loader />}
     </main>
   );
 }
