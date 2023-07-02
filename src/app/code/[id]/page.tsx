@@ -53,7 +53,7 @@ export default function Page() {
     setCommentLine(line);
     setModalOpen(true);
   };
-  const { data, isSuccess, isFetching, isLoading, isError } = useQuery({
+  const { data, isSuccess, isFetching, isLoading, isError, refetch } = useQuery({
     queryKey: ["code"],
     queryFn: () => codeService.getCode(auth.token, Number(id)),
     keepPreviousData: true,
@@ -103,6 +103,7 @@ export default function Page() {
             setModalOpen={setModalOpen}
             codeLine={commentLine?.text}
             numberCodeLine={commentLine?.number}
+            refetch={refetch}
           />
         ) : (
           <div className="flex flex-col gap-4 items-center">

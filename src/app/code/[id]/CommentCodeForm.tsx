@@ -4,12 +4,15 @@ import CustomInput from "@/components/formComponents/CustomInput";
 import CustomButton from "@/components/interactive/CustomButton";
 import LoadingLabel from "@/components/interactive/LoadingLabel";
 import useAuth from "@/hooks/useAuth";
+import { PostCommentI } from "@/models/comment";
+import { StrapiResponse } from "@/models/strapiModel";
 import { commentService } from "@/services/commentServices";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { Dispatch } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type CommentCodeFormInputs = {
   message: string;
@@ -19,12 +22,14 @@ type CommentCodeFormProps = {
   setModalOpen: Dispatch<React.SetStateAction<boolean>>;
   codeLine: string;
   numberCodeLine: number;
+  refetch: () => void;
 };
 
 function CommentCodeForm({
   setModalOpen,
   codeLine,
   numberCodeLine,
+  refetch,
 }: CommentCodeFormProps) {
   const methods = useForm<CommentCodeFormInputs>();
   const { auth } = useAuth();
@@ -32,7 +37,7 @@ function CommentCodeForm({
 
   const commentMutation = useMutation({
     mutationFn: (data: CommentCodeFormInputs) => {
-      return commentService.postComment(auth.token, {
+      const postComment = commentService.postComment(auth.token, {
         message: data.message,
         code: Number(id),
         upvotes: 0,
@@ -41,13 +46,16 @@ function CommentCodeForm({
         codeLine,
         numberCodeLine,
       });
+      toast.promise(postComment, {
+        loading: "Commenting...",
+        success: "Commented successfully",
+        error: "Error commenting",
+      });
+      return postComment;
     },
-    onSuccess: (response: AxiosResponse) => {
-      console.log(response);
+    onSuccess: (response: StrapiResponse<PostCommentI>) => {
       setModalOpen(false);
-    },
-    onError: (error: any) => {
-      console.log(error);
+      refetch();
     },
   });
 
@@ -62,7 +70,8 @@ function CommentCodeForm({
           COMMENT
         </Badge>
         <p className="text-sm text-gray-400">
-          Commenting on line <span className="font-bold text-gray-800">{codeLine}</span>
+          Commenting on line{" "}
+          <span className="font-bold text-gray-800">{codeLine}</span>
         </p>
         <FormProvider {...methods}>
           <form
@@ -81,13 +90,19 @@ function CommentCodeForm({
               />
             </span>
             <div className="flex gap-2">
-              <CustomButton theme="secondary">
+              <CustomButton
+                disable={commentMutation.isLoading}
+                theme="secondary"
+              >
                 <LoadingLabel
                   message="Comment"
                   state={commentMutation.isLoading}
                 />
               </CustomButton>
-              <CustomButton onClick={() => setModalOpen(false)}>
+              <CustomButton
+                disable={commentMutation.isLoading}
+                onClick={() => setModalOpen(false)}
+              >
                 Cancel
               </CustomButton>
             </div>

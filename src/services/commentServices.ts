@@ -1,3 +1,5 @@
+import { StrapiResponse } from './../models/strapiModel';
+import { PostCommentI } from './../models/comment';
 import axios from "@/api/axios";
 import { CommentI } from "@/models/comment";
 
@@ -15,8 +17,8 @@ export const commentService = {
     },
     async postComment(
         token: string,
-        comment: CommentI
-    ) {
+        comment: PostCommentI
+    ): Promise<StrapiResponse<PostCommentI>> {
         const url = `/comments`;
         const response = await axios.post(url, { data: comment }, {
             headers: {

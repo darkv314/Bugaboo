@@ -15,3 +15,8 @@ export type CommentGetI = {
     attributes: CommentI;
     id: number
 }
+
+export type PostCommentI = Omit<CommentI, "users_permissions_user"> & {
+    users_permissions_user: number;
+};
+
