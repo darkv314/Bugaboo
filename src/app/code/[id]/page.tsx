@@ -155,8 +155,10 @@ export default function Page() {
       </Badge>
       {isSuccess && (
         <>
-          <h1 className="text-4xl font-bold font-cabin">{code?.title}</h1>
-          <p className="text-lg">{code?.description}</p>
+          <h1 className="text-4xl font-bold font-cabin">
+            {data.data.attributes.title}
+          </h1>
+          <p className="text-lg">{data.data.attributes.description}</p>
           <CodeMirror
             height="400px"
             theme={"dark"}

@@ -32,8 +32,8 @@ export const Services = () => {
           <QuoteMessage width={40} height={40} className="text-primary " />
         </ServicesCard>
         <ServicesCard
-          title="Collaborative Environment"
-          text="The platform offers effective search and filtering functionalities, making it easy for users to find relevant code snippets."
+          title="Code Quality Assessment"
+          text="Users can rate the quality of the code they find"
         >
           <Community width={40} height={40} className="text-primary " />
         </ServicesCard>
