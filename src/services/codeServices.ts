@@ -34,7 +34,7 @@ export const codeService = {
         );
         return response.data;
     },
-    async putCode(token: string, code: PostCode, idUser: number) {
+    async putCode(token: string, code: PostCode, idUser: number): Promise<StrapiResponse<CodeGet>> {
         const url = `/codes/${idUser}`;
         const response = await axios.put(
             url,

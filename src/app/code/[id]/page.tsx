@@ -8,7 +8,7 @@ import { linesAddPlusGutter } from "@/utils/@codemirror/glutter/src";
 import { LineModel } from "@/models/@codemirror/LineModel";
 import { codeService } from "@/services/codeServices";
 import useAuth from "@/hooks/useAuth";
-import { Code } from "@/models/code";
+import { Code, CodeGet, PostCode } from "@/models/code";
 import Modal from "@/components/interactive/Modal";
 import { set } from "react-hook-form";
 import { commentService } from "@/services/commentServices";
@@ -24,8 +24,10 @@ import {
 } from "iconoir-react";
 import { Comment } from "./Comment";
 import { stringToDate } from "@/app/utils/stringTodate";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Loader } from "@/app/loader/Loader";
+import { StrapiResponse } from "@/models/strapiModel";
+import { toast } from "sonner";
 
 type CommentLine = {
   from: number;
@@ -49,44 +51,60 @@ export default function Page() {
   });
 
   const handleComment = (line: LineModel) => {
-    console.log(line);
     setCommentLine(line);
     setModalOpen(true);
   };
-  const { data, isSuccess, isFetching, isLoading, isError, refetch } = useQuery({
-    queryKey: ["code"],
-    queryFn: () => codeService.getCode(auth.token, Number(id)),
-    keepPreviousData: true,
+  const { data, isSuccess, isFetching, isLoading, isError, refetch } = useQuery(
+    {
+      queryKey: ["code"],
+      queryFn: () => codeService.getCode(auth.token, Number(id)),
+      keepPreviousData: true,
+    }
+  );
+
+  const voteMutation = useMutation({
+    mutationFn: (data: PostCode) => {
+      const putCode = codeService.putCode(auth.token, data, Number(id));
+      toast.promise(putCode, {
+        loading: "Voting...",
+        success: "Voted successfully",
+        error: "Error voting",
+      });
+      return putCode;
+    },
+    onSuccess: (response: StrapiResponse<CodeGet>) => {
+      refetch();
+    },
   });
 
-  const handleUpvote = () => {
-    codeService.putCode(
-      auth.token,
-      {
+  const handleUpvote = async () => {
+    if (!auth.token) {
+      setModalOpen(true);
+    } else {
+      voteMutation.mutate({
         upvotes: {
           connect: [Number(auth.userId)],
         },
         downvotes: {
           disconnect: [Number(auth.userId)],
         },
-      },
-      Number(auth.userId)
-    );
+      });
+    }
   };
 
   const handleDownvote = () => {
-    codeService.putCode(
-      auth.token,
-      {
+    if (!auth.token) {
+      setModalOpen(true);
+    } else {
+      voteMutation.mutate({
         downvotes: {
           connect: [Number(auth.userId)],
         },
         upvotes: {
           disconnect: [Number(auth.userId)],
         },
-      },
-      Number(auth.userId)
-    );
+      });
+    }
   };
 
   return (
@@ -108,7 +126,7 @@ export default function Page() {
         ) : (
           <div className="flex flex-col gap-4 items-center">
             <h1 className="text-2xl font-bold font-cabin">
-              You need to be logged in to comment 😢
+              You need to be logged in to comment 😢 or vote 🙀
             </h1>
             <div className="flex gap-2  w-full">
               <CustomButton
@@ -204,7 +222,7 @@ export default function Page() {
           </div>
         </>
       )}
-      {(isLoading || isFetching) && <Loader />}
+      {isLoading && <Loader />}
     </main>
   );
 }

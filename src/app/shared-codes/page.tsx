@@ -58,7 +58,7 @@ function page() {
           />
         )}
       </div>
-      {(isLoading || isFetching) && <Loader />}
+      {(isLoading) && <Loader />}
     </main>
   );
 }

@@ -21,10 +21,6 @@ export const Comment: React.FC<CommentProps> = ({ comment, idComment }) => {
       return commentService.putComment(auth.token, data, idComment);
     },
     onSuccess: (response: AxiosResponse) => {
-      console.log(response);
-    },
-    onError: (error: any) => {
-      console.log(error);
     },
   });
 
