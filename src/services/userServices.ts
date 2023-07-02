@@ -33,6 +33,21 @@ export const userService = {
         return response.data;
     },
 
+    async getNotifications(id: string, token: string) {
+        const url = `/users/${id}`;
+        const response = await axios.get(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+            params: {
+                populate: "notifications",
+            },
+        });
+        return response.data.notifications;
+    },
+
     async updateUser(data: updateUser, id: number, token: string) {
         if (
             data.password !== "" &&
